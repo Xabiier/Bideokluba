@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.concurrent.Executor;
-
 
 public class DBKonexioa {
 	
@@ -14,9 +12,9 @@ public class DBKonexioa {
 
     private String erabiltzaileaDB = "bideokluba";
     
-    private String pasahitzaDB = "bideokluba"; 
+    private String pasahitzaDB = "bdkluba"; 
 
-    private String hostDB = "127.0.0.1:3306";
+    private String hostDB = "lacorporativa.es:3306";
 
     private String izenaBD = "bideokluba";
     
@@ -29,7 +27,6 @@ public class DBKonexioa {
             Class.forName("com.mysql.jdbc.Driver");
             String datuBasea = "jdbc:mysql://"+hostDB+"/"+izenaBD;
             try{
-            	//((DriverManager) konexioa).setLoginTimeout(5000);
             	konexioa = DriverManager.getConnection(datuBasea, erabiltzaileaDB, pasahitzaDB);
             }catch(SQLException e){
             	e.printStackTrace();
@@ -37,7 +34,7 @@ public class DBKonexioa {
             
             if(this.konexioa != null){
             	try{
-            		Statement statement = konexioa.createStatement();
+            		konexioa.createStatement();
             	}catch(SQLException e){
             		System.out.println("Unable to create statement");
             	}
