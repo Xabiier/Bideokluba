@@ -1,9 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-
-import javafx.scene.layout.Border;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,11 +13,10 @@ import java.awt.BorderLayout;
 
 public class BideoKlubaUI extends JFrame {
 	
+	//Atributoak
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Launch the application.
-	 */
+	//Main metodoa
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -34,11 +30,10 @@ public class BideoKlubaUI extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Eraikitzailea
 	public BideoKlubaUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		
 		JLabel ongiEtorri = new JLabel("Ongi etorri Bideoklubera!");
 		ongiEtorri.setHorizontalAlignment(JLabel.CENTER);
@@ -82,6 +77,9 @@ public class BideoKlubaUI extends JFrame {
 		
 		setVisible(true);
 		pack();
+		setLocationRelativeTo(null);
 	}
+	
+	//Beste metodoak
 
 }
