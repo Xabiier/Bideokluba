@@ -5,26 +5,42 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.Executor;
 
 
 public class DBKonexioa {
 	
 	private Connection konexioa = null;
 
-    private String erabiltzaileaDB = "root";
+    private String erabiltzaileaDB = "bideokluba";
     
-    private String pasahitzaDB = ""; 
+    private String pasahitzaDB = "bideokluba"; 
 
-    private String hostDB = "localhost";
+    private String hostDB = "127.0.0.1:3306";
 
-    private String izenaBD = "Bideokluba";
+    private String izenaBD = "bideokluba";
+    
+    public DBKonexioa() {
+		
+	}
 	
 	public void konektatu() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String datuBasea = "jdbc:mysql://"+hostDB+"/"+izenaBD;
-            konexioa = DriverManager.getConnection(datuBasea, erabiltzaileaDB, pasahitzaDB);
+            try{
+            	//((DriverManager) konexioa).setLoginTimeout(5000);
+            	konexioa = DriverManager.getConnection(datuBasea, erabiltzaileaDB, pasahitzaDB);
+            }catch(SQLException e){
+            	e.printStackTrace();
+            }
+            
             if(this.konexioa != null){
+            	try{
+            		Statement statement = konexioa.createStatement();
+            	}catch(SQLException e){
+            		System.out.println("Unable to create statement");
+            	}
                 System.out.println("Konektatu da");
             }else{
                 System.out.println("Ez da konektatu");                
