@@ -30,7 +30,8 @@ public class BideoKlubaUI extends JFrame {
 		JLabel erabiltzailea = new JLabel("Erabiltzailea:");
 		JLabel pasahitza = new JLabel("Pasahitza:    ");
 		
-		JButton sartuBotoia = new JButton("Sartu");
+		JButton sartu = new JButton("Sartu");
+		JButton admin = new JButton("Admin");
 		JButton gonbidatuak = new JButton("Gonbidatua");
 		
 	    JTextField erabiltzaileField = new JTextField(15);
@@ -44,25 +45,35 @@ public class BideoKlubaUI extends JFrame {
 	    p2.add(pasahitza);
 	    p2.add(pasahitzaField);
 	    
-	    JPanel p3 = new JPanel(new BorderLayout(0, 0));
+	    JPanel pSartu = new JPanel();
+	    pSartu.add(sartu);
+	    
+	    JPanel pAdmin = new JPanel();
+	    pAdmin.add(admin);
+	    
+	    JPanel pGonbidatua = new JPanel();
+	    pGonbidatua.add(gonbidatuak);
+	    
+	    JPanel p3 = new JPanel(new BorderLayout());
 	    p3.add(p1, BorderLayout.NORTH);
 	    p3.add(p2, BorderLayout.SOUTH);
 	    
-	    JPanel p4 = new JPanel(new BorderLayout(0, 0));
+	    JPanel p4 = new JPanel(new BorderLayout());
 	    p4.add(ongiEtorri, BorderLayout.CENTER);
 	    p4.add(p3, BorderLayout.SOUTH);
 	    
-	    JPanel p5 = new JPanel(new BorderLayout(0, 0));
-	    p5.add(sartuBotoia, BorderLayout.WEST);
-	    p5.add(gonbidatuak, BorderLayout.EAST);
+	    JPanel p5 = new JPanel(new BorderLayout());
+	    p5.add(pSartu, BorderLayout.NORTH);
+	    p5.add(pAdmin, BorderLayout.CENTER);
+	    p5.add(pGonbidatua, BorderLayout.SOUTH);
 	    
-	    JPanel p6 = new JPanel(new BorderLayout(0, 0));
+	    JPanel p6 = new JPanel(new BorderLayout());
 	    p6.add(p4, BorderLayout.NORTH);
 	    p6.add(p5, BorderLayout.CENTER);
 		
 	    getContentPane().add(p6);
 	    
-	    sartuBotoia.addActionListener(new ActionListener() {
+	    sartu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -71,7 +82,16 @@ public class BideoKlubaUI extends JFrame {
 				
 			}
 		});
-		
+	    
+	    admin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bideokluba.getBideokluba().adminKonektatu(erabiltzaileField.getText().trim(), 
+						pasahitzaField.getText().trim());
+				
+			}
+		}); 		
 		
 		setVisible(true);
 		pack();
