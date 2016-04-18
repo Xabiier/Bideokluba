@@ -3,6 +3,10 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Scanner;
 
 import view.BideoKlubaUI;
 
@@ -68,6 +72,83 @@ public class Bideokluba {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void administratzaileaKonektatu() {
+		System.out.println("Administratzaile bezala sartu zara\n");
+		System.out.println("Zer egin nahiko zenuke?\n"
+				+ "1 - Bazkide berria sartu\n"
+				+ "2 - Bazkide bati alta/baja eman\n"
+				+ "3 - Pelikula berria sartu\n"
+				+ "4 - Pelikula bati baja eman\n"
+				+ "5 - Sistematik atera");
+		Scanner sc = new Scanner(System.in);
+		Integer aukera = Integer.parseInt(sc.next());
+		while(aukera<1 || aukera>5){
+			System.out.println("Aukera ez egokia, aukeratu zenbaki egoki bat");
+			aukera = Integer.parseInt(sc.next());
+		}
+		String query;
+		switch(aukera){
+		case(1):{
+			bazkideGehitu();
+			break;
+		}
+		case(2):{
+			
+			break;
+		}
+		case(3):{
+				
+			break;
+		}
+		case(4):{
+			
+			break;
+		}
+		case(5):{
+			System.out.println();
+		
+			break;
+		}
+		}
+		
+	}
+	
+	private void bazkideGehitu(){
+		
+		String query;
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Sartu bazkidearen kodea: ");
+		String kodea = sc.next();
+		
+		System.out.print("Sartu bazkidearen pasahitza: ");
+		String pasahitza = sc.next();
+		
+		System.out.print("Sartu bazkidearen izena: ");
+		String izena = sc.next();
+		
+		System.out.print("Sartu bazkidearen abizena: ");
+		String abizena = sc.next();
+		
+		System.out.print("Sartu bazkidearen helbidea: ");
+		String helbidea = sc.next();
+		
+		String kreditua = "0"; //Hasieran guztiak 0 krediturekin hasten dira
+		
+		String egoera = "alta"; //alta edo baja
+		
+		String data;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		data = df.format(cal.getTime()); //Gaurko data jarriko da
+		
+		query = "INSERT INTO Bazkide"
+		+ "(`Kodea`, `Pasahitza`, `Izena`, `Abizena`, `Helbidea`, `Kreditua`, `Egoera`, `Noiztik` "
+		+ "VALUES('"+ kodea +"', '"+ pasahitza +"', '"+ izena +"', '"+ abizena +"', '"+ helbidea +"', "+ kreditua +", '"+ egoera +"', '"+ data +"'";
+		
+		con.aldatu(query);
 	}
 
 

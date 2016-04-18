@@ -32,6 +32,7 @@ public class BideoKlubaUI extends JFrame {
 		
 		JButton sartuBotoia = new JButton("Sartu");
 		JButton gonbidatuak = new JButton("Gonbidatua");
+		JButton admin = new JButton("Administratzailea");
 		
 	    JTextField erabiltzaileField = new JTextField(15);
 	    JTextField pasahitzaField = new JPasswordField(15);
@@ -55,6 +56,7 @@ public class BideoKlubaUI extends JFrame {
 	    JPanel p5 = new JPanel(new BorderLayout(0, 0));
 	    p5.add(sartuBotoia, BorderLayout.WEST);
 	    p5.add(gonbidatuak, BorderLayout.EAST);
+	    p5.add(admin, BorderLayout.CENTER);
 	    
 	    JPanel p6 = new JPanel(new BorderLayout(0, 0));
 	    p6.add(p4, BorderLayout.NORTH);
@@ -71,7 +73,15 @@ public class BideoKlubaUI extends JFrame {
 				
 			}
 		});
-		
+	    
+	    admin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bideokluba.getBideokluba().administratzaileaKonektatu();
+				
+			}
+		});
 		
 		setVisible(true);
 		pack();
