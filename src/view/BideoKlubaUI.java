@@ -33,7 +33,6 @@ public class BideoKlubaUI extends JFrame {
 		JButton sartu = new JButton("Sartu");
 		JButton admin = new JButton("Admin");
 		JButton gonbidatuak = new JButton("Gonbidatua");
-		JButton admin = new JButton("Administratzailea");
 		
 	    JTextField erabiltzaileField = new JTextField(15);
 	    JTextField pasahitzaField = new JPasswordField(15);
@@ -63,17 +62,10 @@ public class BideoKlubaUI extends JFrame {
 	    p4.add(ongiEtorri, BorderLayout.CENTER);
 	    p4.add(p3, BorderLayout.SOUTH);
 	    
-<<<<<<< HEAD
 	    JPanel p5 = new JPanel(new BorderLayout());
 	    p5.add(pSartu, BorderLayout.NORTH);
 	    p5.add(pAdmin, BorderLayout.CENTER);
 	    p5.add(pGonbidatua, BorderLayout.SOUTH);
-=======
-	    JPanel p5 = new JPanel(new BorderLayout(0, 0));
-	    p5.add(sartuBotoia, BorderLayout.WEST);
-	    p5.add(gonbidatuak, BorderLayout.EAST);
-	    p5.add(admin, BorderLayout.CENTER);
->>>>>>> 941f44eb0505e142069597ccf75bf029d412a1e5
 	    
 	    JPanel p6 = new JPanel(new BorderLayout());
 	    p6.add(p4, BorderLayout.NORTH);
@@ -95,22 +87,12 @@ public class BideoKlubaUI extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
+
 				Bideokluba.getBideokluba().adminKonektatu();
-=======
-<<<<<<< HEAD
-				Bideokluba.getBideokluba().adminKonektatu(erabiltzaileField.getText().trim(), 
-						pasahitzaField.getText().trim());
+				//Bideokluba.getBideokluba().adminKonektatu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
 				
 			}
-		}); 		
-=======
-				Bideokluba.getBideokluba().administratzaileaKonektatu();
->>>>>>> branch 'master' of https://github.com/Xabiier/Bideokluba
-				
-			}
-		});
->>>>>>> 941f44eb0505e142069597ccf75bf029d412a1e5
+		}); 
 		
 		setVisible(true);
 		pack();
