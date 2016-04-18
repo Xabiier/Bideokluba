@@ -1,6 +1,8 @@
 package view;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,26 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import java.awt.BorderLayout;
+import model.Bideokluba;
 
 public class BideoKlubaUI extends JFrame {
 	
 	//Atributoak
 	private static final long serialVersionUID = 1L;
-
-	//Main metodoa
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BideoKlubaUI frame = new BideoKlubaUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	//Eraikitzailea
 	public BideoKlubaUI() {
@@ -46,7 +34,7 @@ public class BideoKlubaUI extends JFrame {
 		JButton gonbidatuak = new JButton("Gonbidatua");
 		
 	    JTextField erabiltzaileField = new JTextField(15);
-	    JPasswordField pasahitzaField = new JPasswordField(15);
+	    JTextField pasahitzaField = new JPasswordField(15);
 		
 	    JPanel p1 = new JPanel();
 	    p1.add(erabiltzailea);
@@ -73,6 +61,16 @@ public class BideoKlubaUI extends JFrame {
 	    p6.add(p5, BorderLayout.CENTER);
 		
 	    getContentPane().add(p6);
+	    
+	    sartuBotoia.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
+						pasahitzaField.getText().trim());
+				
+			}
+		});
 		
 		
 		setVisible(true);

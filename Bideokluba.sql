@@ -1,6 +1,6 @@
 CREATE TABLE BAZKIDE(
   Kodea VARCHAR(15) NOT NULL,
-  Pasahitza VARCHAR(15),
+  Pasahitza VARCHAR(15) NOT NULL,
   Izena VARCHAR(15),
   Abizena VARCHAR(15),
   Helbidea VARCHAR(15),
@@ -15,9 +15,14 @@ CREATE TABLE PELIKULA(
   Prezioa TINYINT,
   Egoera VARCHAR(15),
   Sartze_data DATE,
+  PRIMARY KEY(Kodea)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE ALOKAIRUAK{
+  Bazkide_kodea VARCHAR(15) NOT NULL,
+  Pelikula_kodea VARCHAR(15) NOT NULL,
   Hartze_data DATE,
   Itzultze_data DATE,
-  Bazkide_kodea VARCHAR(15),
-  PRIMARY KEY(Kodea, Hartze_data, Itzultze_data, Bazkide_kodea),
-  FOREIGN KEY(Bazkide_kodea) REFERENCES BAZKIDE(Kodea)
+  PRIMARY KEY(Bazkide_kodea, Pelikula_kodea, Hartze_data, Itzultze_data)
+  FOREIGN KEY(Bazkide_kodea) REFERENCES BAZKIDE(Kodea) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY(Pelikula_kodea) REFERENCES PELIKULA(Kodea) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
