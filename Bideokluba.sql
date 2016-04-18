@@ -4,16 +4,16 @@ CREATE TABLE BAZKIDE(
   Izena VARCHAR(15),
   Abizena VARCHAR(15),
   Helbidea VARCHAR(15),
-  Kreditua SMALLINT,
-  Egoera VARCHAR(15),
-  Noiztik DATE,
+  Kreditua SMALLINT DEFAULT 0,
+  Egoera VARCHAR(15) DEFAULT 'alta',
+  Noiztik DATETIME,
   PRIMARY KEY(Kodea)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE PELIKULA(
   Kodea VARCHAR(15) NOT NULL,
   Izena VARCHAR(15),
   Prezioa TINYINT,
-  Egoera VARCHAR(15),
+  Egoera VARCHAR(15) DEFAULT 'libre',
   Sartze_data DATE,
   PRIMARY KEY(Kodea)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

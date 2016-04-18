@@ -78,7 +78,7 @@ public class BideoKlubaUI extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().administratzaileaKonektatu();
+				Bideokluba.getBideokluba().adminKonektatu();
 				
 			}
 		});

@@ -28,49 +28,15 @@ public class Bideokluba {
 
 		new BideoKlubaUI();
 		con.konektatu();
-		String query;
-		
-		/*
-		//Kontsulta edo eguneraketa egin
-		//if kontsulta
-			System.out.println("Idatzi egin nahi duzun kontsulta: ");
-			query = null;//Teklatutik jaso
-			con.kontsultatu(query);
-		//else if eguneraketa
-			System.out.println("Idatzi egin nahi duzun aldaketa: ");
-			query = null;//Teklatutik jaso
-			con.aldatu(query);
-			*/
-		
-		
 
 	}
 	
-	public void erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
-		/*String a = "INSERT INTO Bazkide"
-				+ "(`Kodea`, `Pasahitza`, `Izena`, `Abizena`, `Helbidea`, `Kreditua`, `Egoera`, `Noiztik` "
-				+ "VALUES('Holi', 'Holi', 'Holi', 'Holi', 'Holi kalea', 10, 'Holi', '1111-11-11'";
-		con.aldatu(a);*/
-		
-		String query =	 "SELECT *"
-						+"FROM `BAZKIDE` "
-						+"WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
-		ResultSet rs = con.kontsultatu(query);
-		try {
-			if(!rs.isBeforeFirst()){
-				System.out.println("Ez da erabiltzaile hori existitzen");
-			}
-			else{
-				rs.next();
-				System.out.println("Ongi etorri, " + rs.getString(3));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void administratzaileaKonektatu() {
-		
+	/*
+	 * ADMIN METODOAK
+	 */
+	
+	public void adminKonektatu() {
+		/*
 		System.out.println("\nAdministratzaile menua:\n");
 		
 		System.out.println("\nZer egin nahiko zenuke?\n"
@@ -85,7 +51,7 @@ public class Bideokluba {
 			System.out.println("Aukera ez egokia, aukeratu zenbaki egoki bat");
 			aukera = Integer.parseInt(sc.next());
 		}
-		String query;
+		sc.close();
 		switch(aukera){
 		case(1):{
 			bazkideGehitu();
@@ -100,7 +66,7 @@ public class Bideokluba {
 			break;
 		}
 		case(4):{
-			pelikulaBaja();
+			bajaEmanPelikula();
 			break;
 		}
 		case(5):{
@@ -109,55 +75,28 @@ public class Bideokluba {
 			break;
 		}
 		}
-		
+		*/
 	}
 
-	private void bazkideGehitu(){
+	public void bazkideGehitu(String pKodea, String pPasahitza){
 		
-		String query;
-		Scanner sc = new Scanner(System.in);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
 		
-		System.out.print("Sartu bazkidearen kodea: ");
-		String kodea = sc.next();
-		
-		System.out.print("Sartu bazkidearen pasahitza: ");
-		String pasahitza = sc.next();
-		
-		System.out.print("Sartu bazkidearen izena: ");
-		String izena = sc.next();
-		
-		System.out.print("Sartu bazkidearen abizena: ");
-		String abizena = sc.next();
-		
-		System.out.print("Sartu bazkidearen helbidea: ");
-		String helbidea = sc.next();
-		
-		String kreditua = "0"; //Hasieran guztiak 0 krediturekin hasten dira
-		
-		String egoera = "alta"; //alta edo baja
-		
-		String data;
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar cal = Calendar.getInstance();
-		data = df.format(cal.getTime()); //Gaurko data jarriko da
-		
-		query = "INSERT INTO Bazkide"
-			  + "(`Kodea`, `Pasahitza`, `Izena`, `Abizena`, `Helbidea`, `Kreditua`, `Egoera`, `Noiztik` "
-		      + "VALUES('"+ kodea +"', '"+ pasahitza +"', '"+ izena +"', '"+ abizena +"', '"+ helbidea +"', "+ kreditua +", '"+ egoera +"', '"+ data +"'";
+		String query = "INSERT INTO Bazkide"
+			  + "(`Kodea`, `Pasahitza`, `Noiztik` "
+		      + "VALUES('"+ pKodea +"', '"+ pPasahitza +"','"+ data +"'";
 		
 		con.aldatu(query);
 	}
 
-	private void bazkideAltaBaja() {
+	public void bazkideAltaBaja(String pKodea, String pEgoera) {
 		String query;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Zein bazkideri nahi diozu alta/baja eman? Idatzi haren kodea: ");
-		String kodea = sc.next();
-		
 		query =	 "SELECT *"
 				+"FROM `BAZKIDE`"
-				+"WHERE `Kodea`='" + kodea + "';";
+				+"WHERE `Kodea`='" + pKodea + "';";
 		
 		ResultSet rs = con.kontsultatu(query);
 		try {
@@ -167,62 +106,128 @@ public class Bideokluba {
 			else{
 				String aukera;
 				rs.next();
-				if(rs.getString(7).equalsIgnoreCase("baja")){
-					System.out.println("Erabiltzaile hori bajan dago, alta eman nahi diozu? (B/E) ");
+				if(rs.getString(7).equalsIgnoreCase("alta") && pEgoera.equalsIgnoreCase("baja")){
+					System.out.println("Erabiltzaile hori altan dago, ziur baja eman nahi diozula? (B/E) ");
 					aukera = sc.next();
 					if(aukera.equalsIgnoreCase("B")){
-						query = "ALTER TABLE `BAZKIDE`"
-							  + "ADD COLUMN `egoera`"
-							  + "'alta'";
-					}
-				}
-				else{
-					System.out.println("Erabiltzaile hori altan dago, baja eman nahi diozu? (B/E) ");
-					aukera = sc.next();
-					if(aukera.equalsIgnoreCase("B")){
-						query = "ALTER TABLE `BAZKIDE`"
-							  + "ADD COLUMN `egoera`"
-							  + "'baja'";
+						query = "UPDATE `BAZKIDE`"
+							  + "SET `Egoera`='" + pEgoera + "'"
+							  + "WHERE `Kodea`=" + pKodea + ";";
 						
 					//GARRANTZITSUA, BAZKIDE HORI ALOKATUTA DAUZKAN PELIKULAK ITZULI BEHAR AL DIRA?
 					}
+				}
+				else{
+					query = "UPDATE `BAZKIDE`"
+						  + "SET `Egoera`='" + pEgoera + "'"
+						  + "WHERE `Kodea`=" + pKodea + ";";
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		sc.close();
 	}
 
-	private void pelikulaGehitu() {
-		String query;
-		Scanner sc = new Scanner(System.in);
+	public void pelikulaGehitu(String pKodea, String pIzena, int pPrezioa) {
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
 		
-		System.out.print("Sartu pelikularen kodea: ");
-		String kodea = sc.next();
-		
-		System.out.print("Sartu pelikualaren izena: ");
-		String izena = sc.next();
-		
-		System.out.print("Sartu pelikularen prezioa: ");
-		Integer prezioa = Integer.parseInt(sc.next());
-		
-		String egoera = "alta"; //alta edo baja
-		
-		String data;
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar cal = Calendar.getInstance();
-		data = df.format(cal.getTime()); //Gaurko data jarriko da
-		
-		query = "INSERT INTO `BAZKIDE`"
-			  + "(`Kodea`, `Izena`, `Prezioa`, `Egoera`, `Sartze_data` "
-		      + "VALUES('"+ kodea +"', '"+ izena +" ', "+ prezioa +", '"+ egoera +"', '"+ data +"'";
+		String query = "INSERT INTO `BAZKIDE`"
+				 	 + "(`Kodea`, `Izena`, `Prezioa`, `Sartze_data` "
+				 	 + "VALUES('"+ pKodea +"', '"+ pIzena +" ', "+ pPrezioa +", '"+ data +"'";
 		
 		con.aldatu(query);
 	}
 	
-	private void pelikulaBaja() {
-		// TODO Auto-generated method stub
+	public void bajaEmanPelikula(String pKodea) {
 		
+		String query = "DELETE FROM `PELIKULA"+
+					   "WHERE `Kodea`='" + pKodea + "';";
+		con.aldatu(query);
+		
+		
+	}
+	
+	/*
+	 * ERABILTZAILE METODOAK
+	 */
+	
+	public void erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
+		
+		
+		String query =	 "SELECT *"+
+						 "FROM `BAZKIDE` "+
+						 "WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(!rs.isBeforeFirst()){
+				System.out.println("Ez da erabiltzaile hori existitzen");
+			}
+			else{
+				rs.next();
+				System.out.println("Ongi etorri, " + rs.getString(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void pasahitzaAldatu(String pKodea, String pPasahitza) {
+		String kontsulta = 	"UPDATE `BAZKIDE` "+
+							"SET `Pasahitza`="+pPasahitza+" "+
+							"WHERE `Kodea`="+pKodea+";";
+		con.aldatu(kontsulta);
+	}
+	
+	public void helbideaAldatu(String pKodea, String pHelbidea) {
+		String kontsulta = 	"UPDATE `BAZKIDE` "+
+							"SET `Helbidea`="+pHelbidea+" "+
+							"WHERE `Kodea`="+pKodea+";";
+		con.aldatu(kontsulta);
+	}
+	
+	public void izenaAldatu(String pKodea, String pIzena) {
+		String kontsulta = 	"UPDATE `BAZKIDE` "+
+							"SET `Izena`="+pIzena+" "+
+							"WHERE `Kodea`="+pKodea+";";
+		con.aldatu(kontsulta);		
+	}
+	
+	public void abizenaAldatu(String pKodea, String pAbizena) {
+		String kontsulta = 	"UPDATE `BAZKIDE` "+
+							"SET `Abizena`="+pAbizena+" "+
+							"WHERE `Kodea`="+pKodea+";";
+		con.aldatu(kontsulta);		
+	}
+	
+	public void kredituaGehitu(String pKodea, int pKreditua) {
+		String kontsulta = 	"UPDATE `BAZKIDE` "+
+							"SET `Abizena`="+pKreditua+" "+
+							"WHERE `Kodea`="+pKodea+";";
+		con.aldatu(kontsulta);		
+	}
+	
+	public void pelikulaAlokatuItzuli(String pKodea) {
+		
+	}
+	
+	/*
+	 * ZATI LIBREKO METODOAK
+	 */
+	
+	public void katalogoaIkusi() {
+		String kontsulta =	"SELECT * "+
+							"FROM `PELIKULA`;";
+		ResultSet rs = con.kontsultatu(kontsulta);
+	}
+	
+	public void estreinaldiakIkusi() {
+		String kontsulta =	"SELECT * "+
+						    "FROM `PELIKULA`"+
+						    "ORDER BY `Sartze_data` DESC LIMIT 10"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
+		ResultSet rs = con.kontsultatu(kontsulta);
 	}
 
 
