@@ -81,6 +81,13 @@ public class LoginUI extends JPanel {
 			}
 		});
 	    
+	    pasahitzaField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
+						pasahitzaField.getText().trim());
+			}
+		});
+	    
 	    admin.addActionListener(new ActionListener() {
 			
 			@Override
