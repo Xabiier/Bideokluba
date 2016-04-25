@@ -26,8 +26,12 @@ public class Bideokluba {
 
 	public static void main(String[] args) {
 
-		new BideoKlubaUI();
+		//new BideoKlubaUI();
 		con.konektatu();
+		
+		Bideokluba.getBideokluba().pelikulaGehitu("1", "Holi", 0);
+		
+		Bideokluba.getBideokluba().estreinaldiakIkusi();
 
 	}
 	
@@ -83,9 +87,9 @@ public class Bideokluba {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
 		
-		String query = "INSERT INTO Bazkide"
-			  + "(`Kodea`, `Pasahitza`, `Noiztik` "
-		      + "VALUES('"+ pKodea +"', '"+ pPasahitza +"','"+ data +"'";
+		String query = 	"INSERT INTO `BAZKIDE`"+
+						"(`Kodea`, `Pasahitza`, `Noiztik`) "+
+						"VALUES('"+ pKodea +"', '"+ pPasahitza +"','"+ data +"');";
 		
 		con.aldatu(query);
 	}
@@ -94,9 +98,9 @@ public class Bideokluba {
 		String query;
 		Scanner sc = new Scanner(System.in);
 		
-		query =	 "SELECT *"
-				+"FROM `BAZKIDE`"
-				+"WHERE `Kodea`='" + pKodea + "';";
+		query =	"SELECT *"+
+				"FROM `BAZKIDE`"+
+				"WHERE `Kodea`='" + pKodea + "';";
 		
 		ResultSet rs = con.kontsultatu(query);
 		try {
@@ -110,44 +114,57 @@ public class Bideokluba {
 					System.out.println("Erabiltzaile hori altan dago, ziur baja eman nahi diozula? (B/E) ");
 					aukera = sc.next();
 					if(aukera.equalsIgnoreCase("B")){
-						query = "UPDATE `BAZKIDE`"
-							  + "SET `Egoera`='" + pEgoera + "'"
-							  + "WHERE `Kodea`=" + pKodea + ";";
+						query = "UPDATE `BAZKIDE`"+
+								"SET `Egoera`='" + pEgoera + "'"+
+								"WHERE `Kodea`=" + pKodea + ";";
 						
 					//GARRANTZITSUA, BAZKIDE HORI ALOKATUTA DAUZKAN PELIKULAK ITZULI BEHAR AL DIRA?
 					}
 				}
 				else{
-					query = "UPDATE `BAZKIDE`"
-						  + "SET `Egoera`='" + pEgoera + "'"
-						  + "WHERE `Kodea`=" + pKodea + ";";
+					query = "UPDATE `BAZKIDE`"+
+							"SET `Egoera`='" + pEgoera + "'"+
+							"WHERE `Kodea`=" + pKodea + ";";
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		con.aldatu(query);
 		sc.close();
 	}
 
 	public void pelikulaGehitu(String pKodea, String pIzena, int pPrezioa) {
+		
+		String kontsulta =	"SELECT * "+
+							"FROM `PELIKULA`"+
+							"WHERE `Kodea`='"+pKodea+"';";
+		ResultSet rs = con.kontsultatu(kontsulta);
+		try {
+			if(!rs.isBeforeFirst()) {
+				
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
+				
+				String query = 	"INSERT INTO `PELIKULA`"+
+						 	 	"(`Kodea`, `Izena`, `Prezioa`, `Sartze_data`) "+
+						 	 	"VALUES('"+ pKodea +"', '"+ pIzena +" ', "+ pPrezioa +", '"+ data +"');";
+				
+				con.aldatu(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
 		
-		String query = "INSERT INTO `BAZKIDE`"
-				 	 + "(`Kodea`, `Izena`, `Prezioa`, `Sartze_data` "
-				 	 + "VALUES('"+ pKodea +"', '"+ pIzena +" ', "+ pPrezioa +", '"+ data +"'";
-		
-		con.aldatu(query);
 	}
 	
 	public void bajaEmanPelikula(String pKodea) {
 		
-		String query = "DELETE FROM `PELIKULA"+
+		String query = "DELETE FROM `PELIKULA`"+
 					   "WHERE `Kodea`='" + pKodea + "';";
 		con.aldatu(query);
-		
-		
 	}
 	
 	/*
@@ -156,10 +173,9 @@ public class Bideokluba {
 	
 	public void erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
 		
-		
-		String query =	 "SELECT *"+
-						 "FROM `BAZKIDE` "+
-						 "WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
+		String query =	"SELECT *"+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
 		ResultSet rs = con.kontsultatu(query);
 		try {
 			if(!rs.isBeforeFirst()){
@@ -176,35 +192,35 @@ public class Bideokluba {
 	
 	public void pasahitzaAldatu(String pKodea, String pPasahitza) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Pasahitza`="+pPasahitza+" "+
+							"SET `Pasahitza`='"+pPasahitza+"' "+
 							"WHERE `Kodea`="+pKodea+";";
 		con.aldatu(kontsulta);
 	}
 	
 	public void helbideaAldatu(String pKodea, String pHelbidea) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Helbidea`="+pHelbidea+" "+
+							"SET `Helbidea`='"+pHelbidea+"' "+
 							"WHERE `Kodea`="+pKodea+";";
 		con.aldatu(kontsulta);
 	}
 	
 	public void izenaAldatu(String pKodea, String pIzena) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Izena`="+pIzena+" "+
+							"SET `Izena`='"+pIzena+"' "+
 							"WHERE `Kodea`="+pKodea+";";
 		con.aldatu(kontsulta);		
 	}
 	
 	public void abizenaAldatu(String pKodea, String pAbizena) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Abizena`="+pAbizena+" "+
+							"SET `Abizena`='"+pAbizena+"' "+
 							"WHERE `Kodea`="+pKodea+";";
 		con.aldatu(kontsulta);		
 	}
 	
 	public void kredituaGehitu(String pKodea, int pKreditua) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Abizena`="+pKreditua+" "+
+							"SET `Kreditua`="+pKreditua+" "+
 							"WHERE `Kodea`="+pKodea+";";
 		con.aldatu(kontsulta);		
 	}
@@ -221,6 +237,15 @@ public class Bideokluba {
 		String kontsulta =	"SELECT * "+
 							"FROM `PELIKULA`;";
 		ResultSet rs = con.kontsultatu(kontsulta);
+		
+		try {
+			while (rs.next()) {
+				System.out.println(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void estreinaldiakIkusi() {
@@ -228,6 +253,15 @@ public class Bideokluba {
 						    "FROM `PELIKULA`"+
 						    "ORDER BY `Sartze_data` DESC LIMIT 10"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
 		ResultSet rs = con.kontsultatu(kontsulta);
+		
+		try {
+			while (rs.next()) {
+				System.out.println(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
