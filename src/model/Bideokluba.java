@@ -1,6 +1,5 @@
 package model;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -8,7 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import view.BideoKlubaUI;
+import view.LeihoaUI;
+import view.LoginUI;
 
 public class Bideokluba {
 	
@@ -26,7 +26,7 @@ public class Bideokluba {
 
 	public static void main(String[] args) {
 
-		//new BideoKlubaUI();
+		LeihoaUI.getNireLeihoa().aldatuPanela(new LoginUI());
 		con.konektatu();
 		
 		Bideokluba.getBideokluba().pelikulaGehitu("1", "Holi", 0);
@@ -233,35 +233,26 @@ public class Bideokluba {
 	 * ZATI LIBREKO METODOAK
 	 */
 	
-	public void katalogoaIkusi() {
+	public ResultSet katalogoaIkusi() {
 		String kontsulta =	"SELECT * "+
 							"FROM `PELIKULA`;";
-		ResultSet rs = con.kontsultatu(kontsulta);
-		
-		try {
-			while (rs.next()) {
-				System.out.println(rs.getString(2));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return con.kontsultatu(kontsulta);
 	}
 	
-	public void estreinaldiakIkusi() {
+	public ResultSet estreinaldiakIkusi() {
 		String kontsulta =	"SELECT * "+
 						    "FROM `PELIKULA`"+
 						    "ORDER BY `Sartze_data` DESC LIMIT 10"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
-		ResultSet rs = con.kontsultatu(kontsulta);
+		return con.kontsultatu(kontsulta);
 		
-		try {
+		/*try {
 			while (rs.next()) {
 				System.out.println(rs.getString(2));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 

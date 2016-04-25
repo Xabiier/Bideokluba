@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -11,6 +13,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+
+import model.Bideokluba;
 
 public class PelikulakUI extends JPanel{
 	
@@ -28,7 +32,35 @@ public class PelikulakUI extends JPanel{
 		setLayout(new BorderLayout());
 		pelikulak.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		JLabel pelikula = new JLabel("Pelikulak");
+		panelaEraiki();
+		pelikulakIkusi();
+		estreinaldiakIkusi();
+	}
+	
+	public static PelikulakUI getNirePelikulakUI() {
+		return nirePelikulakUI;
+	}
+	
+	public void pelikulakIkusi() {
+		ResultSet pelikulak = Bideokluba.getBideokluba().katalogoaIkusi();
+		try {
+			while (pelikulak.next()) {
+				modelPelikulak.addElement(pelikulak.getString(2));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+	}
+	
+	public void estreinaldiakIkusi() {
+		ResultSet pelikulak = Bideokluba.getBideokluba().estreinaldiakIkusi();
+		try {
+			while (pelikulak.next()) {
+				modelAzkenak.addElement(pelikulak.getString(2));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+	}
+	
+	private void panelaEraiki() {
+		JLabel pelikula = new JLabel("          Pelikulak          ");
 		
 		JPanel p1 = new JPanel();
 		p1.add(pelikula);
@@ -44,7 +76,7 @@ public class PelikulakUI extends JPanel{
 		p3.add(new JPanel(), BorderLayout.EAST);
 		p3.add(new JPanel(), BorderLayout.SOUTH);
 		
-		JLabel azkena = new JLabel("Nobedadeak");
+		JLabel azkena = new JLabel("          Nobedadeak          ");
 		
 		JPanel p4 = new JPanel();
 		p4.add(azkena);
@@ -76,11 +108,7 @@ public class PelikulakUI extends JPanel{
 				
 			}
 		});
+		
 	}
-
-	public static PelikulakUI getNirePelikulakUI() {
-		return nirePelikulakUI;
-	}
-	
 
 }
