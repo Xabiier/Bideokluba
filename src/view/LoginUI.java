@@ -1,11 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -13,15 +13,13 @@ import javax.swing.JTextField;
 
 import model.Bideokluba;
 
-public class BideoKlubaUI extends JFrame {
+public class LoginUI extends JPanel {
 	
 	//Atributoak
 	private static final long serialVersionUID = 1L;
 
 	//Eraikitzailea
-	public BideoKlubaUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
+	public LoginUI() {
 		
 		JLabel ongiEtorri = new JLabel("Ongi etorri Bideoklubera!");
 		ongiEtorri.setHorizontalAlignment(JLabel.CENTER);
@@ -62,16 +60,16 @@ public class BideoKlubaUI extends JFrame {
 	    p4.add(ongiEtorri, BorderLayout.CENTER);
 	    p4.add(p3, BorderLayout.SOUTH);
 	    
-	    JPanel p5 = new JPanel(new BorderLayout());
-	    p5.add(pSartu, BorderLayout.NORTH);
-	    p5.add(pAdmin, BorderLayout.CENTER);
-	    p5.add(pGonbidatua, BorderLayout.SOUTH);
+	    JPanel p5 = new JPanel(new GridLayout(1, 3));
+	    p5.add(pSartu);
+	    p5.add(pAdmin);
+	    p5.add(pGonbidatua);
 	    
 	    JPanel p6 = new JPanel(new BorderLayout());
 	    p6.add(p4, BorderLayout.NORTH);
 	    p6.add(p5, BorderLayout.CENTER);
 		
-	    getContentPane().add(p6);
+	    add(p6);
 	    
 	    sartu.addActionListener(new ActionListener() {
 			
@@ -93,10 +91,15 @@ public class BideoKlubaUI extends JFrame {
 				
 			}
 		}); 
-		
-		setVisible(true);
-		pack();
-		setLocationRelativeTo(null);
+	    
+	    gonbidatuak.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LeihoaUI.getNireLeihoa().aldatuPanela(PelikulakUI.getNirePelikulakUI());
+				
+			}
+		});
 	}
 	
 	//Beste metodoak
