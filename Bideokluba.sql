@@ -22,7 +22,7 @@ CREATE TABLE ALOKAIRUAK(
   Pelikula_kodea VARCHAR(15) NOT NULL,
   Hartze_data DATETIME,
   Itzultze_data DATETIME,
-  PRIMARY KEY(Bazkide_kodea, Pelikula_kodea, Hartze_data, Itzultze_data),
+  PRIMARY KEY(Bazkide_kodea, Pelikula_kodea, Hartze_data),
   FOREIGN KEY(Bazkide_kodea) REFERENCES BAZKIDE(Kodea) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY(Pelikula_kodea) REFERENCES PELIKULA(Kodea) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
