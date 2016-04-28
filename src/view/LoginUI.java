@@ -29,7 +29,6 @@ public class LoginUI extends JPanel {
 		JLabel pasahitza = new JLabel("Pasahitza:    ");
 		
 		JButton sartu = new JButton("Sartu");
-		JButton admin = new JButton("Admin");
 		JButton gonbidatuak = new JButton("Gonbidatua");
 		
 	    JTextField erabiltzaileField = new JTextField(15);
@@ -46,9 +45,6 @@ public class LoginUI extends JPanel {
 	    JPanel pSartu = new JPanel();
 	    pSartu.add(sartu);
 	    
-	    JPanel pAdmin = new JPanel();
-	    pAdmin.add(admin);
-	    
 	    JPanel pGonbidatua = new JPanel();
 	    pGonbidatua.add(gonbidatuak);
 	    
@@ -62,7 +58,6 @@ public class LoginUI extends JPanel {
 	    
 	    JPanel p5 = new JPanel(new GridLayout(1, 3));
 	    p5.add(pSartu);
-	    p5.add(pAdmin);
 	    p5.add(pGonbidatua);
 	    
 	    JPanel p6 = new JPanel(new BorderLayout());
@@ -75,7 +70,10 @@ public class LoginUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
+				if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
+					LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
+				else
+					Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
 						pasahitzaField.getText().trim());
 				
 			}
@@ -87,17 +85,6 @@ public class LoginUI extends JPanel {
 						pasahitzaField.getText().trim());
 			}
 		});
-	    
-	    admin.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
-					LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
-				
-			}
-		}); 
 	    
 	    gonbidatuak.addActionListener(new ActionListener() {
 			
