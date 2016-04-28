@@ -18,9 +18,7 @@ public class DBKonexioa {
 
     private String izenaBD = "bideokluba";
     
-    public DBKonexioa() {
-		
-	}
+    public DBKonexioa() {}
 	
 	public void konektatu() {
         try {

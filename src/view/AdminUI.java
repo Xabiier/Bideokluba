@@ -40,22 +40,29 @@ public class AdminUI extends JPanel{
 		JButton itzuli = new JButton("Itzuli");
 		itzuliPanel.add(itzuli);
 		
-		
 		goikoa.add(admin);
 		goikoa.add(itzuliPanel);
 		add(goikoa, BorderLayout.NORTH);
 		
 		JPanel aukerak = new JPanel(new GridLayout(2, 1));
 		
+		JPanel pr1 = new JPanel();
 		r1 = new JButton("Bazkide Berria");
+		pr1.add(r1);
+		JPanel pr2 = new JPanel();
 		r2 = new JButton("Bazkide baten egoera aldatu");
+		pr2.add(r2);
+		JPanel pr3 = new JPanel();
 		r3 = new JButton("Pelikula Berria");
+		pr3.add(r3);
+		JPanel pr4 = new JPanel();
 		r4 = new JButton("Pelikula bati baja eman");
+		pr4.add(r4);
 		
-		aukerak.add(r1);
-		aukerak.add(r2);
-		aukerak.add(r3);
-		aukerak.add(r4);
+		aukerak.add(pr1);
+		aukerak.add(pr2);
+		aukerak.add(pr3);
+		aukerak.add(pr4);
 		
 		add(aukerak, BorderLayout.CENTER);
 		kudeaketa = new JPanel(new BorderLayout());
@@ -155,7 +162,7 @@ public class AdminUI extends JPanel{
 	    p2.add(rb2);
 	    
 	    JPanel ok = new JPanel();
-	    JButton okB = new JButton("Sartu");
+	    JButton okB = new JButton("Aldatu");
 	    ok.add(okB);
 	    
 	    kudeaketa.add(p1, BorderLayout.NORTH);
@@ -227,7 +234,7 @@ public class AdminUI extends JPanel{
 	    p1.add(pelikulaField);
 	    
 	    JPanel ok = new JPanel();
-	    JButton okB = new JButton("Sartu");
+	    JButton okB = new JButton("Aldatu");
 	    ok.add(okB);
 	    
 	    kudeaketa.add(p1, BorderLayout.NORTH);

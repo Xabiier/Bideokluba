@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -72,10 +73,14 @@ public class LoginUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
 					LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
-				else
-					Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
-						pasahitzaField.getText().trim());
-				
+				else {
+					String kodea = Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
+					if ( kodea != null)
+						LeihoaUI.getNireLeihoa().aldatuPanela(new BezeroUI(kodea));
+					else 
+						JOptionPane.showMessageDialog(null, "Erabiltzaile edo pasahitz okerrak");
+					
+				}
 			}
 		});
 	    

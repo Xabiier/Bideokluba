@@ -35,24 +35,20 @@ public class Bideokluba {
 
 	}
 	
-	public void erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
-		
-		String query =	"SELECT * "+
+	public String erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
+		String kodea = null;
+		String query =	"SELECT `Kodea` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
 		ResultSet rs = con.kontsultatu(query);
 		try {
-			if(!rs.isBeforeFirst()){
-				System.out.println("Ez da erabiltzaile hori existitzen");
-			}
-			else{
-				rs.next();
-				erabiltzaileKodea = rs.getString(1);
-				System.out.println("Ongi etorri, " + rs.getString(3));
+			if(rs.isBeforeFirst()){
+				return pErabiltzailea;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return kodea;
 	}
 	
 	/*
