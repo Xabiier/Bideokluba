@@ -6,10 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import model.Bideokluba;
 
@@ -104,15 +107,10 @@ public class BezeroUI extends JPanel{
 		kudeaketa.removeAll();
 		revalidate();
 		
-		JLabel pasahitza = new JLabel("Pasahitza:");
-		JLabel izena = new JLabel("Izena:");
-		JLabel abizena = new JLabel("Abizena:");
-		JLabel helbidea = new JLabel("Helbidea:");
-		
-		JTextField pasahitzaField = new JPasswordField(15);
-		JTextField izenaField = new JTextField(15);
-		JTextField abizenaField = new JTextField(15);
-		JTextField helbideaField = new JTextField(15);
+		JLabel pasahitza = new JLabel("Pasahitza: "+Bideokluba.getBideokluba().getPasahitza(kodea));
+		JLabel izena = new JLabel("Izena: "+Bideokluba.getBideokluba().getIzena(kodea));
+		JLabel abizena = new JLabel("Abizena: "+Bideokluba.getBideokluba().getAbizena(kodea));
+		JLabel helbidea = new JLabel("Helbidea: "+Bideokluba.getBideokluba().getHelbidea(kodea));
 		
 		JButton aldatu1 = new JButton("Aldatu");
 		JButton aldatu2 = new JButton("Aldatu");
@@ -121,22 +119,18 @@ public class BezeroUI extends JPanel{
 		
 		JPanel p1 = new JPanel();
 		p1.add(pasahitza);
-		p1.add(pasahitzaField);
 		p1.add(aldatu1);
 		
 		JPanel p2 = new JPanel();
 		p2.add(izena);
-		p2.add(izenaField);
 		p2.add(aldatu2);
 		
 		JPanel p3 = new JPanel();
 		p3.add(abizena);
-		p3.add(abizenaField);
 		p3.add(aldatu3);
 		
 		JPanel p4 = new JPanel();
 		p4.add(helbidea);
-		p4.add(helbideaField);
 		p4.add(aldatu4);
 		
 		JPanel p5 = new JPanel(new GridLayout(4, 1));
@@ -147,32 +141,31 @@ public class BezeroUI extends JPanel{
 		
 		kudeaketa.add(p5);
 		add(kudeaketa, BorderLayout.SOUTH);
-		
+
 		aldatu1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().pasahitzaAldatu(kodea, pasahitzaField.getText().trim());
+				pasahitza.setText("Pasahitza: "+aldatu("pasahitza"));
 			}
 		});
 		aldatu2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().izenaAldatu(kodea, izenaField.getText().trim());
+				izena.setText("Izena: "+aldatu("izena"));
 			}
 		});
 		aldatu3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().abizenaAldatu(kodea, abizenaField.getText().trim());
+				abizena.setText("Abizena: "+aldatu("abizena"));
 			}
 		});
 		aldatu4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().helbideaAldatu(kodea, helbideaField.getText().trim());		
+				helbidea.setText("Helbidea: "+aldatu("helbidea"));
 			}
 		});
-		
 		LeihoaUI.getNireLeihoa().pack();
 	}
 	
@@ -205,5 +198,58 @@ public class BezeroUI extends JPanel{
 	
 	private void pelikulakItzuli() {
 
+	}
+	
+	private String aldatu(String pAldaketa) {
+		
+		JPanel p1 = new JPanel(new BorderLayout());
+		JPanel p2 = new JPanel();
+		JLabel testua = new JLabel();
+		JTextField field;
+		
+		if(pAldaketa.equals("pasahitza")) {
+			testua.setText("Aldatu pasahitza:");
+			field = new JPasswordField(15);
+		}
+		else {
+			if(pAldaketa.equals("izena"))
+				testua.setText("Aldatu izena:");
+			else if(pAldaketa.equals("abizena"))
+				testua.setText("Aldatu abizena:");
+			else
+				testua.setText("Aldatu helbidea:");
+			field = new JTextField(15);
+		}
+		
+		p2.add(testua);
+		p2.add(field);
+		
+		JPanel p3 = new JPanel();
+		JButton ok = new JButton("Aldatu");
+		p3.add(ok);
+		
+		p1.add(p2, BorderLayout.NORTH);
+		p1.add(p3, BorderLayout.SOUTH);
+		
+		ok.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(pAldaketa.equals("pasahitza"))
+					Bideokluba.getBideokluba().pasahitzaAldatu(kodea, field.getText().trim());
+				else if(pAldaketa.equals("izena"))
+					Bideokluba.getBideokluba().izenaAldatu(kodea, field.getText().trim());
+				else if(pAldaketa.equals("abizena"))
+					Bideokluba.getBideokluba().abizenaAldatu(kodea, field.getText().trim());
+				else
+					Bideokluba.getBideokluba().helbideaAldatu(kodea, field.getText().trim());
+				
+				JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+			}
+		});
+		
+		JFrame frame = new JFrame();
+        UIManager.put("OptionPane.okButtonText", "Itzuli");
+        JOptionPane.showMessageDialog(frame, p1, "Aldaketa", JOptionPane.PLAIN_MESSAGE);
+		
+		return field.getText().trim();
 	}
 }

@@ -170,11 +170,45 @@ public class Bideokluba {
 		con.aldatu(kontsulta);
 	}
 	
+	public String getPasahitza(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Pasahitza` "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='"+pKodea+"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
+	
 	public void helbideaAldatu(String pKodea, String pHelbidea) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
 							"SET `Helbidea`='"+pHelbidea+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);
+	}
+	
+	public String getHelbidea(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Pasahitza` "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
 	}
 	
 	public void izenaAldatu(String pKodea, String pIzena) {
@@ -184,11 +218,45 @@ public class Bideokluba {
 		con.aldatu(kontsulta);		
 	}
 	
+	public String getIzena(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Izena` "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
+	
 	public void abizenaAldatu(String pKodea, String pAbizena) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
 							"SET `Abizena`='"+pAbizena+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);		
+	}
+	
+	public String getAbizena(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Abizena` "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
 	}
 	
 	public void kredituaGehitu(String pKodea, int pKreditua) {
@@ -198,9 +266,24 @@ public class Bideokluba {
 		con.aldatu(kontsulta);		
 	}
 	
+	public int getKredituak(String pKodea) {
+		int kodea = 0;
+		String query =	"SELECT `Pasahitza` "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
+	
 	public void pelikulaAlokatu(String pBezKodea, String pPeliKodea) {
-		
-		
 		String query1 =	"SELECT * "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pBezKodea + "';";

@@ -84,13 +84,6 @@ public class LoginUI extends JPanel {
 			}
 		});
 	    
-	    pasahitzaField.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), 
-						pasahitzaField.getText().trim());
-			}
-		});
-	    
 	    gonbidatuak.addActionListener(new ActionListener() {
 			
 			@Override
@@ -99,8 +92,8 @@ public class LoginUI extends JPanel {
 				
 			}
 		});
+	    
+	    LeihoaUI.getNireLeihoa().getRootPane().setDefaultButton(sartu);
 	}
-	
-	//Beste metodoak
 
 }
