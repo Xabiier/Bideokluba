@@ -58,49 +58,6 @@ public class Bideokluba {
 	/*
 	 * ADMIN METODOAK
 	 */
-	
-	public void adminKonektatu() {
-		/*
-		System.out.println("\nAdministratzaile menua:\n");
-		
-		System.out.println("\nZer egin nahiko zenuke?\n"
-				+ "1 - Bazkide berria sartu\n"
-				+ "2 - Bazkide bati alta/baja eman\n"
-				+ "3 - Pelikula berria sartu\n"
-				+ "4 - Pelikula bati baja eman\n"
-				+ "5 - Sistematik atera");
-		Scanner sc = new Scanner(System.in);
-		Integer aukera = Integer.parseInt(sc.next());
-		while(aukera<1 || aukera>5){
-			System.out.println("Aukera ez egokia, aukeratu zenbaki egoki bat");
-			aukera = Integer.parseInt(sc.next());
-		}
-		sc.close();
-		switch(aukera){
-		case(1):{
-			bazkideGehitu();
-			break;
-		}
-		case(2):{
-			bazkideAltaBaja();
-			break;
-		}
-		case(3):{
-			pelikulaGehitu();
-			break;
-		}
-		case(4):{
-			bajaEmanPelikula();
-			break;
-		}
-		case(5):{
-			System.out.println("Agur");
-		
-			break;
-		}
-		}
-		*/
-	}
 
 	public void bazkideGehitu(String pKodea, String pPasahitza){
 		
@@ -153,7 +110,6 @@ public class Bideokluba {
 				System.out.println("Ez da erabiltzaile hori existitzen");
 			}
 			else{
-				String aukera;
 				rs.next();
 				if(rs.getString(7).equalsIgnoreCase("Alta")){
 					query = "UPDATE `BAZKIDE` " +
@@ -195,10 +151,7 @@ public class Bideokluba {
 				
 				con.aldatu(query);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 
 		
 	}
@@ -364,15 +317,6 @@ public class Bideokluba {
 						    "FROM `PELIKULA` "+
 						    "ORDER BY `Sartze_data` DESC LIMIT 10"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
 		return con.kontsultatu(kontsulta);
-		
-		/*try {
-			while (rs.next()) {
-				System.out.println(rs.getString(2));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 

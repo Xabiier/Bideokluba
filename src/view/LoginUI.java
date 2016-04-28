@@ -93,8 +93,8 @@ public class LoginUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Bideokluba.getBideokluba().adminKonektatu();
-				//Bideokluba.getBideokluba().adminKonektatu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
+				if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
+					LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
 				
 			}
 		}); 
@@ -103,7 +103,7 @@ public class LoginUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LeihoaUI.getNireLeihoa().aldatuPanela(PelikulakUI.getNirePelikulakUI());
+				LeihoaUI.getNireLeihoa().aldatuPanela(new PelikulakUI());
 				
 			}
 		});

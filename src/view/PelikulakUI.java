@@ -19,7 +19,6 @@ import model.Bideokluba;
 public class PelikulakUI extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-	private static final PelikulakUI nirePelikulakUI = new PelikulakUI();
 	
 	private DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
 	private JList<String> pelikulak = new JList<String>(modelPelikulak);
@@ -28,17 +27,13 @@ public class PelikulakUI extends JPanel{
 	private JList<String> azkenak = new JList<String>(modelAzkenak);
 	
 
-	private PelikulakUI() {
+	public PelikulakUI() {
 		setLayout(new BorderLayout());
 		pelikulak.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		panelaEraiki();
 		pelikulakIkusi();
 		estreinaldiakIkusi();
-	}
-	
-	public static PelikulakUI getNirePelikulakUI() {
-		return nirePelikulakUI;
 	}
 	
 	public void pelikulakIkusi() {
