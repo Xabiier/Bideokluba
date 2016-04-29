@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class LeihoaUI extends JFrame {
@@ -25,6 +26,10 @@ public class LeihoaUI extends JFrame {
 		pack();
 		setVisible(true);
 		setLocationRelativeTo(null);
+	}
+	
+	public void sortuDialog(String s){
+		JOptionPane.showMessageDialog(null, s);
 	}
 
 }

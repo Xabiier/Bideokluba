@@ -72,10 +72,10 @@ public class Bideokluba {
 						"(`Kodea`, `Pasahitza`, `Noiztik`) "+
 						"VALUES('"+ pKodea +"', '"+ pPasahitza +"','"+ data +"');";
 				con.aldatu(query);
-				System.out.println("Bazkidea sortu da");
+				LeihoaUI.getNireLeihoa().sortuDialog("Bazkidea sortu da");
 			}
 			else{
-				System.out.println("Bazkidea datu basean dago jada");
+				LeihoaUI.getNireLeihoa().sortuDialog("Bazkidea datu basean dago jada");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class Bideokluba {
 		ResultSet rs = con.kontsultatu(query);
 		try {
 			if(!rs.isBeforeFirst()){
-				System.out.println("Ez da erabiltzaile hori existitzen");
+				LeihoaUI.getNireLeihoa().sortuDialog("Ez da erabiltzaile hori existitzen");
 			}
 			else{
 				rs.next();
@@ -100,7 +100,7 @@ public class Bideokluba {
 							"SET `Egoera`='Alta' "+
 							"WHERE `Kodea`=" + pKodea + ";";
 					con.aldatu(query);
-					
+					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari alta eman zaio");
 				}
 			}
 		} catch (SQLException e) {
@@ -118,7 +118,7 @@ public class Bideokluba {
 		ResultSet rs = con.kontsultatu(query);
 		try {
 			if(!rs.isBeforeFirst()){
-				System.out.println("Ez da erabiltzaile hori existitzen");
+				LeihoaUI.getNireLeihoa().sortuDialog("Ez da erabiltzaile hori existitzen");
 			}
 			else{
 				rs.next();
@@ -128,6 +128,7 @@ public class Bideokluba {
 							"WHERE `Kodea`=" + pKodea + ";";
 					
 					con.aldatu(query);
+					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari baja eman zaio");
 					
 					query = "UPDATE `PELIKULA` " +
 							"SET `Egoera`='Deskatalogatuta' " +
@@ -161,6 +162,10 @@ public class Bideokluba {
 						 	 	"VALUES('"+ pKodea +"', '"+ pIzena +" ', "+ pPrezioa +", '"+ data +"');";
 				
 				con.aldatu(query);
+				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula gehitu da");
+			}
+			else{
+				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula hori existitzen da jada");
 			}
 		} catch (SQLException e) {e.printStackTrace();}
 
@@ -169,9 +174,25 @@ public class Bideokluba {
 	
 	public void bajaEmanPelikula(String pKodea) {
 		
-		String query = "DELETE FROM `PELIKULA` "+
-					   "WHERE `Kodea`='" + pKodea + "';";
-		con.aldatu(query);
+		String kontsulta =	"SELECT * "+
+				"FROM `PELIKULA` "+
+				"WHERE `Kodea`='"+pKodea+"';";
+		ResultSet rs = con.kontsultatu(kontsulta);
+		try {
+			if(rs.isBeforeFirst()) {
+				String query = "DELETE FROM `PELIKULA` "+
+							   "WHERE `Kodea`='" + pKodea + "';";
+				con.aldatu(query);
+				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula ezabatu da");
+			}
+			else{
+				LeihoaUI.getNireLeihoa().sortuDialog("Ez da pelikula hori existitzen");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
 	}
 	
 	/*
@@ -183,6 +204,7 @@ public class Bideokluba {
 							"SET `Pasahitza`='"+pPasahitza+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);
+		LeihoaUI.getNireLeihoa().sortuDialog("Pasahitza aldatu da");
 	}
 	
 	public String getPasahitza(String pKodea) {
@@ -207,6 +229,7 @@ public class Bideokluba {
 							"SET `Helbidea`='"+pHelbidea+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);
+		LeihoaUI.getNireLeihoa().sortuDialog("Helbidea aldatu da");
 	}
 	
 	public String getHelbidea(String pKodea) {
@@ -230,6 +253,7 @@ public class Bideokluba {
 							"SET `Izena`='"+pIzena+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);		
+		LeihoaUI.getNireLeihoa().sortuDialog("Izena aldatu da");
 	}
 	
 	public String getIzena(String pKodea) {
@@ -253,6 +277,7 @@ public class Bideokluba {
 							"SET `Abizena`='"+pAbizena+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);		
+		LeihoaUI.getNireLeihoa().sortuDialog("Abizena aldatu da");
 	}
 	
 	public String getAbizena(String pKodea) {
@@ -275,7 +300,8 @@ public class Bideokluba {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
 							"SET `Kreditua`='"+pKreditua+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
-		con.aldatu(kontsulta);		
+		con.aldatu(kontsulta);	
+		LeihoaUI.getNireLeihoa().sortuDialog("Kreditua gehitu da");
 	}
 	
 	public int getKredituak(String pKodea) {
@@ -330,20 +356,21 @@ public class Bideokluba {
 									"SET `Kreditua`='`Kreditua` -"+ Integer.parseInt(rs2.getString(3))+"' "+
 									"WHERE `Kodea`='" + pBezKodea + "';";
 						con.aldatu(kontsulta);
+						LeihoaUI.getNireLeihoa().sortuDialog("Pelikula alokatu duzu");
 					}
 					else{
-						System.out.println("Ez duzu kreditu nahikorik pelikula hori alokatzeko");
+						LeihoaUI.getNireLeihoa().sortuDialog("Ez duzu kreditu nahikorik pelikula hori alokatzeko");
 					}
 				}
 				else if (rs2.getString(4).equalsIgnoreCase("alokatuta")){
-					System.out.println("Pelikula alokatuta dago");
+					LeihoaUI.getNireLeihoa().sortuDialog("Pelikula hori alokatuta dago jada");
 				}
 				else{
-					System.out.println("Pelikula deskatalogatuta dago");
+					LeihoaUI.getNireLeihoa().sortuDialog("Pelikula hori deskatalogatuta dago");
 				}
 			}
 			else{
-				System.out.println("Erabiltzaile hau bajan dago");
+				LeihoaUI.getNireLeihoa().sortuDialog("Erabiltzaile hau bajan dago, ezin duzu pelikularik alokatu");
 			}
 			
 			
@@ -387,6 +414,7 @@ public class Bideokluba {
 				//itzultze-data aldatzea
 				
 				con.aldatu(kontsulta);
+				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula itzuli da");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -399,14 +427,15 @@ public class Bideokluba {
 	
 	public ResultSet katalogoaIkusi() {
 		String kontsulta =	"SELECT * "+
-							"FROM `PELIKULA`;";
+							"FROM `PELIKULA`"+
+							"ORDER BY `Izena`;";
 		return con.kontsultatu(kontsulta);
 	}
 	
 	public ResultSet estreinaldiakIkusi() {
 		String kontsulta =	"SELECT * "+
 						    "FROM `PELIKULA` "+
-						    "ORDER BY `Sartze_data` DESC LIMIT 10"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
+						    "ORDER BY `Sartze_data` DESC LIMIT 10;"; //Uste dut limit 10 jarrita lehenengo 10ak hartuko direla
 		return con.kontsultatu(kontsulta);
 	}
 

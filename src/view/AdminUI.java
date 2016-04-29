@@ -233,7 +233,7 @@ public class AdminUI extends JPanel{
 		revalidate();
 		
 		JLabel pelikula = new JLabel("Pelikula-Kodea:");
-		JTextField pelikulaField = new JTextField(15);
+		final JTextField pelikulaField = new JTextField(15);
 		
 		JPanel p1 = new JPanel();
 	    p1.add(pelikula);
@@ -242,6 +242,13 @@ public class AdminUI extends JPanel{
 	    JPanel ok = new JPanel();
 	    JButton okB = new JButton("Aldatu");
 	    ok.add(okB);
+	    
+	    okB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bideokluba.getBideokluba().bajaEmanPelikula(pelikulaField.getText().trim());
+			}
+		});
 	    
 	    kudeaketa.add(p1, BorderLayout.NORTH);
 	    kudeaketa.add(ok, BorderLayout.SOUTH);

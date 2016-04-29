@@ -101,8 +101,6 @@ public class PelikulakUI extends JPanel{
 		JPanel p8 = new JPanel();
 		JButton atzera = new JButton("Itzuli");
 		p8.add(atzera);
-		//pelikulaInfo.setHorizontalAlignment(JLabel.CENTER);
-		//pelikulaInfo.setVerticalAlignment(JLabel.CENTER);
 		pelikulaInfo.setEditable(false);
 		pelikulaInfo.setBackground(null);
 		pelikulaInfo.setBorder(null);
@@ -117,8 +115,7 @@ public class PelikulakUI extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LeihoaUI.getNireLeihoa().aldatuPanela(new LoginUI());
-				
+				LeihoaUI.getNireLeihoa().aldatuPanela(new LoginUI());	
 			}
 		});
 		
