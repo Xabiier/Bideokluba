@@ -145,7 +145,9 @@ public class BezeroUI extends JPanel{
 		aldatu1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pasahitza.setText("Pasahitza: "+aldatu("pasahitza"));
+				if (!aldatu("pasahitza").equals("")){
+					pasahitza.setText("Pasahitza: "+aldatu("pasahitza"));
+				}
 			}
 		});
 		aldatu2.addActionListener(new ActionListener() {
@@ -233,16 +235,25 @@ public class BezeroUI extends JPanel{
 		
 		ok.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if(pAldaketa.equals("pasahitza"))
-					Bideokluba.getBideokluba().pasahitzaAldatu(kodea, field.getText().trim());
-				else if(pAldaketa.equals("izena"))
+				if(pAldaketa.equals("pasahitza")){
+					String pasahitza = field.getText().trim();
+					if (!pasahitza.isEmpty()){ 
+						Bideokluba.getBideokluba().pasahitzaAldatu(kodea, pasahitza);
+						JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+					}
+				}
+				else if(pAldaketa.equals("izena")){
 					Bideokluba.getBideokluba().izenaAldatu(kodea, field.getText().trim());
-				else if(pAldaketa.equals("abizena"))
+					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+				}
+				else if(pAldaketa.equals("abizena")){
 					Bideokluba.getBideokluba().abizenaAldatu(kodea, field.getText().trim());
-				else
+					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+				}
+				else{
 					Bideokluba.getBideokluba().helbideaAldatu(kodea, field.getText().trim());
-				
-				JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
+				}
 			}
 		});
 		
