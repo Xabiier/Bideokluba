@@ -210,7 +210,6 @@ public class Bideokluba {
 	}
 	
 	public String getHelbidea(String pKodea) {
-		String kodea = null;
 		String query =	"SELECT `Helbidea` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pKodea +"';";
@@ -223,7 +222,7 @@ public class Bideokluba {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return kodea;
+		return "";
 	}
 	
 	public void izenaAldatu(String pKodea, String pIzena) {
@@ -234,7 +233,6 @@ public class Bideokluba {
 	}
 	
 	public String getIzena(String pKodea) {
-		String kodea = null;
 		String query =	"SELECT `Izena` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pKodea +"';";
@@ -247,7 +245,7 @@ public class Bideokluba {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return kodea;
+		return "";
 	}
 	
 	public void abizenaAldatu(String pKodea, String pAbizena) {
@@ -258,7 +256,6 @@ public class Bideokluba {
 	}
 	
 	public String getAbizena(String pKodea) {
-		String kodea = null;
 		String query =	"SELECT `Abizena` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pKodea +"';";
@@ -271,7 +268,7 @@ public class Bideokluba {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return kodea;
+		return "";
 	}
 	
 	public void kredituaGehitu(String pKodea, int pKreditua) {
