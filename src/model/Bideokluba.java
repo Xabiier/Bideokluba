@@ -60,11 +60,26 @@ public class Bideokluba {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String data = df.format(Calendar.getInstance().getTime()); //Gaurko data jarriko da
 		
-		String query = 	"INSERT INTO `BAZKIDE` "+
+		String query =	"SELECT * "+
+						"FROM `BAZKIDE` "+
+						"WHERE `Kodea`='" + pKodea + "';";
+		
+		ResultSet rs = con.kontsultatu(query);
+		
+		try {
+			if(!rs.isBeforeFirst()){
+				query = "INSERT INTO `BAZKIDE` "+
 						"(`Kodea`, `Pasahitza`, `Noiztik`) "+
 						"VALUES('"+ pKodea +"', '"+ pPasahitza +"','"+ data +"');";
-		
-		con.aldatu(query);
+				con.aldatu(query);
+				System.out.println("Bazkidea sortu da");
+			}
+			else{
+				System.out.println("Bazkidea datu basean dago jada");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void bazkideAlta(String pKodea) {

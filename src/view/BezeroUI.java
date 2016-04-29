@@ -107,10 +107,10 @@ public class BezeroUI extends JPanel{
 		kudeaketa.removeAll();
 		revalidate();
 		
-		JLabel pasahitza = new JLabel("Pasahitza: "+Bideokluba.getBideokluba().getPasahitza(kodea));
-		JLabel izena = new JLabel("Izena: "+Bideokluba.getBideokluba().getIzena(kodea));
-		JLabel abizena = new JLabel("Abizena: "+Bideokluba.getBideokluba().getAbizena(kodea));
-		JLabel helbidea = new JLabel("Helbidea: "+Bideokluba.getBideokluba().getHelbidea(kodea));
+		final JLabel pasahitza = new JLabel("Pasahitza: "+Bideokluba.getBideokluba().getPasahitza(kodea));
+		final JLabel izena = new JLabel("Izena: "+Bideokluba.getBideokluba().getIzena(kodea));
+		final JLabel abizena = new JLabel("Abizena: "+Bideokluba.getBideokluba().getAbizena(kodea));
+		final JLabel helbidea = new JLabel("Helbidea: "+Bideokluba.getBideokluba().getHelbidea(kodea));
 		
 		JButton aldatu1 = new JButton("Aldatu");
 		JButton aldatu2 = new JButton("Aldatu");
@@ -200,12 +200,12 @@ public class BezeroUI extends JPanel{
 
 	}
 	
-	private String aldatu(String pAldaketa) {
+	private String aldatu(final String pAldaketa) {
 		
 		JPanel p1 = new JPanel(new BorderLayout());
 		JPanel p2 = new JPanel();
 		JLabel testua = new JLabel();
-		JTextField field;
+		final JTextField field;
 		
 		if(pAldaketa.equals("pasahitza")) {
 			testua.setText("Aldatu pasahitza:");

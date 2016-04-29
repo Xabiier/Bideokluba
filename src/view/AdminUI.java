@@ -108,8 +108,8 @@ public class AdminUI extends JPanel{
 		JLabel erabiltzailea = new JLabel("Erabiltzaile-Kodea:");
 		JLabel pasahitza = new JLabel("Pasahitza:");
 		
-		JTextField erabiltzaileField = new JTextField(15);
-	    JTextField pasahitzaField = new JPasswordField(15);
+		final JTextField erabiltzaileField = new JTextField(15);
+	    final JTextField pasahitzaField = new JPasswordField(15);
 	    
 	    JPanel p1 = new JPanel();
 	    p1.add(erabiltzailea);
@@ -131,7 +131,13 @@ public class AdminUI extends JPanel{
 	    okB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().bazkideGehitu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());			
+				String erabiltzailea = erabiltzaileField.getText().trim();
+				String pasahitza = pasahitzaField.getText().trim();
+				if (!(erabiltzailea.isEmpty() || pasahitza.isEmpty())){
+					Bideokluba.getBideokluba().bazkideGehitu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
+					pasahitzaField.setText("");
+					erabiltzaileField.setText("");
+				}
 			}
 		});
 	    
@@ -182,9 +188,9 @@ public class AdminUI extends JPanel{
 		JLabel izena = new JLabel("Izena:");
 		JLabel prezioa = new JLabel("Prezioa:");
 		
-		JTextField kodeaField = new JTextField(15);
-	    JTextField izenaField = new JTextField(15);
-	    JTextField prezioaField = new JTextField(15);
+		final JTextField kodeaField = new JTextField(15);
+	    final JTextField izenaField = new JTextField(15);
+	    final JTextField prezioaField = new JTextField(15);
 	    
 	    JPanel p1 = new JPanel();
 	    p1.add(kodea);

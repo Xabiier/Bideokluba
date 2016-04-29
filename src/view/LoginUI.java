@@ -32,8 +32,8 @@ public class LoginUI extends JPanel {
 		JButton sartu = new JButton("Sartu");
 		JButton gonbidatuak = new JButton("Gonbidatua");
 		
-	    JTextField erabiltzaileField = new JTextField(15);
-	    JTextField pasahitzaField = new JPasswordField(15);
+	    final JTextField erabiltzaileField = new JTextField(15);
+	    final JTextField pasahitzaField = new JPasswordField(15);
 		
 	    JPanel p1 = new JPanel();
 	    p1.add(erabiltzailea);
