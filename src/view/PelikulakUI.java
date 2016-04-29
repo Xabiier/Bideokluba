@@ -3,8 +3,11 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 
 import model.Bideokluba;
@@ -22,11 +26,14 @@ public class PelikulakUI extends JPanel{
 	
 	private DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
 	private JList<String> pelikulak = new JList<String>(modelPelikulak);
+	private ArrayList<String> pelikulakKey = new ArrayList<String>();
 	
 	private DefaultListModel<String> modelAzkenak = new DefaultListModel<String>();
 	private JList<String> azkenak = new JList<String>(modelAzkenak);
+	private ArrayList<String> azkenakKey = new ArrayList<String>();
 	
-
+	private JTextPane pelikulaInfo = new JTextPane();
+	
 	public PelikulakUI() {
 		setLayout(new BorderLayout());
 		pelikulak.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -37,19 +44,22 @@ public class PelikulakUI extends JPanel{
 	}
 	
 	public void pelikulakIkusi() {
-		ResultSet pelikulak = Bideokluba.getBideokluba().katalogoaIkusi();
+		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().katalogoaIkusi();
+		
 		try {
-			while (pelikulak.next()) {
-				modelPelikulak.addElement(pelikulak.getString(2));
+			while (pelikulaZerrenda.next()) {
+				modelPelikulak.addElement(pelikulaZerrenda.getString(2));
+				pelikulakKey.add(pelikulaZerrenda.getString(1));
 			}
 		} catch (SQLException e) {e.printStackTrace();}
 	}
 	
 	public void estreinaldiakIkusi() {
-		ResultSet pelikulak = Bideokluba.getBideokluba().estreinaldiakIkusi();
+		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().estreinaldiakIkusi();
 		try {
-			while (pelikulak.next()) {
-				modelAzkenak.addElement(pelikulak.getString(2));
+			while (pelikulaZerrenda.next()) {
+				modelAzkenak.addElement(pelikulaZerrenda.getString(2));
+				azkenakKey.add(pelikulaZerrenda.getString(1));
 			}
 		} catch (SQLException e) {e.printStackTrace();}
 	}
@@ -87,9 +97,17 @@ public class PelikulakUI extends JPanel{
 		p6.add(new JPanel(), BorderLayout.EAST);
 		p6.add(new JPanel(), BorderLayout.SOUTH);
 		
-		JPanel p7 = new JPanel();
+		JPanel p7 = new JPanel(new BorderLayout());
+		JPanel p8 = new JPanel();
 		JButton atzera = new JButton("Itzuli");
-		p7.add(atzera);
+		p8.add(atzera);
+		//pelikulaInfo.setHorizontalAlignment(JLabel.CENTER);
+		//pelikulaInfo.setVerticalAlignment(JLabel.CENTER);
+		pelikulaInfo.setEditable(false);
+		pelikulaInfo.setBackground(null);
+		pelikulaInfo.setBorder(null);
+		p7.add(pelikulaInfo, BorderLayout.NORTH);
+		p7.add(p8, BorderLayout.SOUTH);
 		
 		add(p3, BorderLayout.WEST);
 		add(p6, BorderLayout.EAST);
@@ -104,6 +122,31 @@ public class PelikulakUI extends JPanel{
 			}
 		});
 		
+		pelikulak.addMouseListener(new MouseAdapter() {
+			 @Override
+             public void mousePressed(MouseEvent e) {
+					String kodeaAux = pelikulakKey.get(pelikulak.getSelectedIndex());
+	            	pelikulaInfo.setText("Pelikula: "+pelikulak.getSelectedValue()+
+	            			"\nKodea: "+kodeaAux+
+	            			"\nPrezioa: "+Bideokluba.getBideokluba().getPelikulaPrezioa(kodeaAux)+
+	            			"\nEgoera: "+Bideokluba.getBideokluba().getPelikulaEgoera(kodeaAux));
+	            	LeihoaUI.getNireLeihoa().pack();
+			 }
+		});
+		
+		azkenak.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	pelikulaInfo.setText(azkenak.getSelectedValue());
+            	
+            	String kodeaAux = azkenakKey.get(azkenak.getSelectedIndex());
+            	pelikulaInfo.setText("Pelikula: "+azkenak.getSelectedValue()+
+            			"\nKodea: "+kodeaAux+
+            			"\nPrezioa: "+Bideokluba.getBideokluba().getPelikulaPrezioa(kodeaAux)+
+            			"\nEgoera: "+Bideokluba.getBideokluba().getPelikulaEgoera(kodeaAux));
+            	LeihoaUI.getNireLeihoa().pack();
+            }
+        });
 	}
 
 }

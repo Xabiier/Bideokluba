@@ -196,7 +196,7 @@ public class Bideokluba {
 	
 	public String getHelbidea(String pKodea) {
 		String kodea = null;
-		String query =	"SELECT `Pasahitza` "+
+		String query =	"SELECT `Helbidea` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pKodea +"';";
 		ResultSet rs = con.kontsultatu(query);
@@ -398,5 +398,54 @@ public class Bideokluba {
 		return con.kontsultatu(kontsulta);
 	}
 
-
+	public String getPelikulaIzena(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Izena` "+
+						"FROM `PELIKULA` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
+	
+	public int getPelikulaPrezioa(String pKodea) {
+		int kodea = 0;
+		String query =	"SELECT `Prezioa` "+
+						"FROM `PELIKULA` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
+	
+	public String getPelikulaEgoera(String pKodea) {
+		String kodea = null;
+		String query =	"SELECT `Egoera` "+
+						"FROM `PELIKULA` "+
+						"WHERE `Kodea`='" + pKodea +"';";
+		ResultSet rs = con.kontsultatu(query);
+		try {
+			if(rs.isBeforeFirst()){
+				rs.next();
+				return rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kodea;
+	}
 }
