@@ -149,15 +149,15 @@ public class AdminUI extends JPanel{
 		revalidate();
 		
 		JLabel erabiltzailea = new JLabel("Erabiltzaile-Kodea:");
-		JTextField erabiltzaileField = new JTextField(15);
+		final JTextField erabiltzaileField = new JTextField(15);
 		
 		JPanel p1 = new JPanel();
 	    p1.add(erabiltzailea);
 	    p1.add(erabiltzaileField);
 	    
 	    ButtonGroup bg = new ButtonGroup();
-	    JRadioButton rb1 = new JRadioButton("Alta");
-	    JRadioButton rb2 = new JRadioButton("Baja");
+	    final JRadioButton rb1 = new JRadioButton("Alta");
+	    final JRadioButton rb2 = new JRadioButton("Baja");
 	    
 	    bg.add(rb1);
 	    bg.add(rb2);
@@ -174,6 +174,24 @@ public class AdminUI extends JPanel{
 	    kudeaketa.add(p2, BorderLayout.CENTER);
 	    kudeaketa.add(ok, BorderLayout.SOUTH);
 	    add(kudeaketa, BorderLayout.SOUTH);
+	    
+	    okB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String erabiltzailea = erabiltzaileField.getText().trim();
+				if (!erabiltzailea.isEmpty()){
+					if (rb1.isSelected()){
+						Bideokluba.getBideokluba().bazkideAlta(erabiltzailea);
+						erabiltzaileField.setText("");
+					}
+					else if (rb2.isSelected()){
+						Bideokluba.getBideokluba().bazkideBaja(erabiltzailea);//NO FUNCIONA DEL TODO
+						erabiltzaileField.setText("");
+					}
+				}
+				
+			}
+		});
 	    
 	    LeihoaUI.getNireLeihoa().pack();
 	}
@@ -219,10 +237,15 @@ public class AdminUI extends JPanel{
 	    okB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().pelikulaGehitu(kodeaField.getText().trim(), izenaField.getText().trim(), Integer.parseInt(prezioaField.getText().trim()));			
-				kodeaField.setText("");
-				izenaField.setText("");
-				prezioaField.setText("");
+				String kodea = kodeaField.getText().trim();
+				String izena = izenaField.getText().trim();
+				String prezioa = prezioaField.getText().trim();
+				if (!kodea.isEmpty() && !izena.isEmpty() && !prezioa.isEmpty()){
+					Bideokluba.getBideokluba().pelikulaGehitu(kodea, izena, Integer.parseInt(prezioa));			
+					kodeaField.setText("");
+					izenaField.setText("");
+					prezioaField.setText("");
+				}
 				
 			}
 		});
@@ -249,7 +272,10 @@ public class AdminUI extends JPanel{
 	    okB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().bajaEmanPelikula(pelikulaField.getText().trim());
+				String pelikula =pelikulaField.getText().trim();
+				if (!pelikula.isEmpty()){
+					Bideokluba.getBideokluba().bajaEmanPelikula(pelikula);
+				}
 			}
 		});
 	    

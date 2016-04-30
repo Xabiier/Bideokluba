@@ -98,9 +98,12 @@ public class Bideokluba {
 				if(rs.getString(7).equalsIgnoreCase("Baja")){
 					query = "UPDATE `BAZKIDE` "+
 							"SET `Egoera`='Alta' "+
-							"WHERE `Kodea`=" + pKodea + ";";
+							"WHERE `Kodea`='" + pKodea + "';";
 					con.aldatu(query);
 					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari alta eman zaio");
+				}
+				else{
+					LeihoaUI.getNireLeihoa().sortuDialog("Bazkidea altan dago jada");
 				}
 			}
 		} catch (SQLException e) {
@@ -125,18 +128,20 @@ public class Bideokluba {
 				if(rs.getString(7).equalsIgnoreCase("Alta")){
 					query = "UPDATE `BAZKIDE` " +
 							"SET `Egoera`='Baja' " +
-							"WHERE `Kodea`=" + pKodea + ";";
+							"WHERE `Kodea`='" + pKodea + "';";
 					
 					con.aldatu(query);
-					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari baja eman zaio");
 					
 					query = "UPDATE `PELIKULA` " +
 							"SET `Egoera`='Deskatalogatuta' " +
-							"WHERE `ALOKAIRUAK`.`Bazkide_kodea`='" + pKodea + "' and " +
-								   "`ALOKAIRUAK`.`Pelikula_kodea` = `PELIKULA`.`Kodea`;";
+							"WHERE '`ALOKAIRUAK`.`Bazkide_kodea`'='" + pKodea + "' and '" +
+								   "`ALOKAIRUAK`.`Pelikula_kodea`' ='`PELIKULA`.`Kodea`';";
 					
 					con.aldatu(query);
-					
+					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari baja eman zaio");
+				}
+				else{
+					LeihoaUI.getNireLeihoa().sortuDialog("Bazkidea bajan dago jada");
 				}
 			}
 		} catch (SQLException e) {
