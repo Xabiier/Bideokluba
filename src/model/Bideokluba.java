@@ -13,7 +13,6 @@ public class Bideokluba {
 	
 	private static Bideokluba nBideokluba = null;
 	private static DBKonexioa con = new DBKonexioa();
-	private static String erabiltzaileKodea;
 			
 	private Bideokluba(){}
 	
@@ -28,11 +27,6 @@ public class Bideokluba {
 
 		LeihoaUI.getNireLeihoa().aldatuPanela(new LoginUI());
 		con.konektatu();
-		
-		//Bideokluba.getBideokluba().bazkideGehitu("holi", "holi");
-		
-		//Bideokluba.getBideokluba().estreinaldiakIkusi();
-
 	}
 	
 	public String erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
@@ -303,7 +297,7 @@ public class Bideokluba {
 	
 	public void kredituaGehitu(String pKodea, int pKreditua) {
 		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Kreditua`='"+pKreditua+"' "+
+							"SET `Kreditua`='"+(getKredituak(pKodea)+pKreditua)+"' "+
 							"WHERE `Kodea`='"+pKodea+"';";
 		con.aldatu(kontsulta);	
 		LeihoaUI.getNireLeihoa().sortuDialog("Kreditua gehitu da");
@@ -311,7 +305,7 @@ public class Bideokluba {
 	
 	public int getKredituak(String pKodea) {
 		int kodea = 0;
-		String query =	"SELECT `Pasahitza` "+
+		String query =	"SELECT `Kreditua` "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pKodea +"';";
 		ResultSet rs = con.kontsultatu(query);
@@ -339,6 +333,7 @@ public class Bideokluba {
 
 		try {
 			rs1.next();
+			rs2.next();
 			String egoera = rs1.getString(7);
 			if(egoera.equalsIgnoreCase("alta") ){
 				if(rs2.getString(4).equalsIgnoreCase("libre")){
@@ -349,7 +344,7 @@ public class Bideokluba {
 						
 						String kontsulta = 	"INSERT INTO `ALOKAIRUAK` "+
 						 	 				"(`Bazkide_kodea`, `Pelikula_kodea`, `Hartze_data`, `Itzultze_data`) "+
-						 	 				"VALUES('"+ pBezKodea +"', '"+ pPeliKodea +" ', "+ data +", NULL);";
+						 	 				"VALUES('"+ pBezKodea +"', '"+ pPeliKodea +" ', '"+ data +"', NULL);";
 						con.aldatu(kontsulta);
 						
 						kontsulta = "UPDATE `PELIKULA` "+
@@ -358,7 +353,7 @@ public class Bideokluba {
 						con.aldatu(kontsulta);
 						
 						kontsulta = "UPDATE `BAZKIDE` "+
-									"SET `Kreditua`='`Kreditua` -"+ Integer.parseInt(rs2.getString(3))+"' "+
+									"SET `Kreditua`='"+(Integer.parseInt(rs1.getString(6)) - Integer.parseInt(rs2.getString(3)))+"' "+
 									"WHERE `Kodea`='" + pBezKodea + "';";
 						con.aldatu(kontsulta);
 						LeihoaUI.getNireLeihoa().sortuDialog("Pelikula alokatu duzu");
@@ -383,7 +378,13 @@ public class Bideokluba {
 			e.printStackTrace();
 		}
 
-				
+	}
+	
+	public ResultSet erabiltzailearenPelikulak(String pBezKodea) {
+		String query = 	"SELECT `Pelikula_kodea` "+
+						"FROM `ALOKAIRUAK` "+
+						"WHERE `Bazkide_kodea`='" + pBezKodea+"';";
+		return con.kontsultatu(query);
 	}
 	
 	public void pelikulaItzuli(String pBezKodea, String pPeliKodea) {
@@ -398,9 +399,9 @@ public class Bideokluba {
 		ResultSet rs2 = con.kontsultatu(query2);
 		
 		try {
-			rs1.next();
 			rs2.next();
 			if(rs1.isBeforeFirst() && rs2.getString(4).equalsIgnoreCase("alokatuta")){
+				rs1.next();
 				
 				String kontsulta = 	"UPDATE `PELIKULA` "+
 									"SET `Egoera`='libre' "+
@@ -419,6 +420,11 @@ public class Bideokluba {
 				//itzultze-data aldatzea
 				
 				con.aldatu(kontsulta);
+				
+				kontsulta = "DELETE FROM `ALOKAIRUAK` "+
+							"WHERE `Bazkide_kodea`='"+pBezKodea+"' and `Pelikula_kodea`='"+pPeliKodea+"';";
+				con.aldatu(kontsulta);
+				
 				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula itzuli da");
 			}
 		} catch (SQLException e) {

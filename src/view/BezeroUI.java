@@ -4,15 +4,25 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
+import javafx.scene.layout.Border;
 import model.Bideokluba;
 
 public class BezeroUI extends JPanel{
@@ -21,6 +31,8 @@ public class BezeroUI extends JPanel{
 	private JPanel kudeaketa;
 	private JButton r1, r2, r3, r4;
 	private JLabel labelPasahitza, labelIzena, labelAbizena, labelHelbidea;
+	
+	private JTextPane pelikulaInfo = new JTextPane();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -100,6 +112,7 @@ public class BezeroUI extends JPanel{
 				LeihoaUI.getNireLeihoa().aldatuPanela(new LoginUI());			
 			}
 		});
+		
 	}
 	
 	private void datuakAldatu() {
@@ -204,11 +217,113 @@ public class BezeroUI extends JPanel{
 	}
 	
 	private void pelikulakAlokatu() {
+		remove(kudeaketa);
+		kudeaketa.removeAll();
+		revalidate();
+		
+		DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
+		JList<String> pelikulak = new JList<String>(modelPelikulak);
+		ArrayList<String> pelikulakKey = new ArrayList<String>();
+		
+		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().katalogoaIkusi();
+		try {
+			while (pelikulaZerrenda.next()) {
+				modelPelikulak.addElement(pelikulaZerrenda.getString(2));
+				pelikulakKey.add(pelikulaZerrenda.getString(1));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+		
+		JScrollPane p = new JScrollPane();
+		p.setViewportView(pelikulak);
+		
+		JPanel panelAlokatu = new JPanel();
+		JButton buttonAlokatu = new JButton("Alokatu");
+		panelAlokatu.add(buttonAlokatu);
+		
+		kudeaketa.add(p, BorderLayout.NORTH);
+		kudeaketa.add(pelikulaInfo, BorderLayout.CENTER);
+		kudeaketa.add(panelAlokatu, BorderLayout.SOUTH);
+		
+		add(kudeaketa, BorderLayout.SOUTH);
+		LeihoaUI.getNireLeihoa().pack();
+		
+		pelikulak.addMouseListener(new MouseAdapter() {
+			 @Override
+            public void mousePressed(MouseEvent e) {
+					String kodeaAux = pelikulakKey.get(pelikulak.getSelectedIndex());
+	            	pelikulaInfo.setText("Pelikula: "+pelikulak.getSelectedValue()+
+	            			"\nKodea: "+kodeaAux+
+	            			"\nPrezioa: "+Bideokluba.getBideokluba().getPelikulaPrezioa(kodeaAux)+
+	            			"\nEgoera: "+Bideokluba.getBideokluba().getPelikulaEgoera(kodeaAux));
+	            	LeihoaUI.getNireLeihoa().pack();
+			 }
+		});
+
+		buttonAlokatu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(pelikulak.getSelectedIndex()));
+			}
+		});
 		
 	}
 	
 	private void pelikulakItzuli() {
+		remove(kudeaketa);
+		kudeaketa.removeAll();
+		revalidate();
+		
+		DefaultListModel<String> modelAlokatuak = new DefaultListModel<String>();
+		JList<String> alokatuak = new JList<String>(modelAlokatuak);
+		ArrayList<String> alokatuakKey = new ArrayList<String>();
+		
+		ResultSet alokatuZerrenda = Bideokluba.getBideokluba().erabiltzailearenPelikulak(kodea);
+		try {
+			while (alokatuZerrenda.next()) {
+				modelAlokatuak.addElement(alokatuZerrenda.getString(1));
+				alokatuakKey.add(alokatuZerrenda.getString(1));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+		
+		JScrollPane p = new JScrollPane();
+		p.setViewportView(alokatuak);
+		
+		JPanel panelItzuli = new JPanel();
+		JButton buttonItzuli = new JButton("Itzuli");
+		panelItzuli.add(buttonItzuli);
+		
+		kudeaketa.add(p, BorderLayout.NORTH);
+		kudeaketa.add(pelikulaInfo, BorderLayout.CENTER);
+		kudeaketa.add(panelItzuli, BorderLayout.SOUTH);
+		
+		add(kudeaketa, BorderLayout.SOUTH);
+		LeihoaUI.getNireLeihoa().pack();
+		
+		alokatuak.addMouseListener(new MouseAdapter() {
+			 @Override
+            public void mousePressed(MouseEvent e) {
+				 int i = alokatuak.getSelectedIndex();
+				if(i >= 0) {
+					String kodeaAux = alokatuakKey.get(i);
+	            	pelikulaInfo.setText("Pelikula: "+alokatuak.getSelectedValue()+
+	            			"\nKodea: "+kodeaAux);
+	            	LeihoaUI.getNireLeihoa().pack();
+				}
+			 }
+		});
 
+		buttonItzuli.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i = alokatuak.getSelectedIndex();
+				if(i >= 0) {
+					Bideokluba.getBideokluba().pelikulaItzuli(kodea, alokatuakKey.get(i));
+					alokatuakKey.remove(i);
+					modelAlokatuak.remove(i);
+				}
+			}
+		});
 	}
 	
 	private void aldatu(final String pAldaketa) {
