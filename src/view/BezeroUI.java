@@ -239,20 +239,16 @@ public class BezeroUI extends JPanel{
 					String pasahitza = field.getText().trim();
 					if (!pasahitza.isEmpty()){ 
 						Bideokluba.getBideokluba().pasahitzaAldatu(kodea, pasahitza);
-						JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
 					}
 				}
 				else if(pAldaketa.equals("izena")){
 					Bideokluba.getBideokluba().izenaAldatu(kodea, field.getText().trim());
-					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
 				}
 				else if(pAldaketa.equals("abizena")){
 					Bideokluba.getBideokluba().abizenaAldatu(kodea, field.getText().trim());
-					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
 				}
 				else{
 					Bideokluba.getBideokluba().helbideaAldatu(kodea, field.getText().trim());
-					JOptionPane.showMessageDialog(null, "Aldaketa ondo egin da");
 				}
 			}
 		});

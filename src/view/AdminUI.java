@@ -18,7 +18,6 @@ import model.Bideokluba;
 public class AdminUI extends JPanel{
 	
 	private JPanel kudeaketa;
-	private JButton r1, r2, r3, r4;
 
 	private static final long serialVersionUID = 1L;
 	
@@ -47,16 +46,16 @@ public class AdminUI extends JPanel{
 		JPanel aukerak = new JPanel(new GridLayout(2, 1));
 		
 		JPanel pr1 = new JPanel();
-		r1 = new JButton("Bazkide Berria");
+		JButton r1 = new JButton("Bazkide Berria");
 		pr1.add(r1);
 		JPanel pr2 = new JPanel();
-		r2 = new JButton("Bazkide baten egoera aldatu");
+		JButton r2 = new JButton("Bazkide baten egoera aldatu");
 		pr2.add(r2);
 		JPanel pr3 = new JPanel();
-		r3 = new JButton("Pelikula Berria");
+		JButton r3 = new JButton("Pelikula Berria");
 		pr3.add(r3);
 		JPanel pr4 = new JPanel();
-		r4 = new JButton("Pelikula bati baja eman");
+		JButton r4 = new JButton("Pelikula bati baja eman");
 		pr4.add(r4);
 		
 		aukerak.add(pr1);
@@ -221,6 +220,10 @@ public class AdminUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Bideokluba.getBideokluba().pelikulaGehitu(kodeaField.getText().trim(), izenaField.getText().trim(), Integer.parseInt(prezioaField.getText().trim()));			
+				kodeaField.setText("");
+				izenaField.setText("");
+				prezioaField.setText("");
+				
 			}
 		});
 	    
