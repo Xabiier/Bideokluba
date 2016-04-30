@@ -240,7 +240,7 @@ public class AdminUI extends JPanel{
 				String kodea = kodeaField.getText().trim();
 				String izena = izenaField.getText().trim();
 				String prezioa = prezioaField.getText().trim();
-				if (!kodea.isEmpty() && !izena.isEmpty() && !prezioa.isEmpty()){
+				if (!kodea.isEmpty() && !izena.isEmpty() && !prezioa.isEmpty() && LeihoaUI.getNireLeihoa().naturalaDa(prezioa)){
 					Bideokluba.getBideokluba().pelikulaGehitu(kodea, izena, Integer.parseInt(prezioa));			
 					kodeaField.setText("");
 					izenaField.setText("");

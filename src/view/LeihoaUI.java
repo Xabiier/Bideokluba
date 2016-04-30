@@ -31,5 +31,17 @@ public class LeihoaUI extends JFrame {
 	public void sortuDialog(String s){
 		JOptionPane.showMessageDialog(null, s);
 	}
+	
+	public boolean naturalaDa(String pZenb){
+		boolean egelaBai = false;
+		try {
+			if(Integer.parseInt(pZenb)>0){;
+				egelaBai = true;
+			}
+		} catch (Exception e) {
+			egelaBai = false;
+		}
+		return egelaBai;
+	}
 
 }
