@@ -22,7 +22,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import javafx.scene.layout.Border;
 import model.Bideokluba;
 
 public class BezeroUI extends JPanel{
@@ -222,8 +221,8 @@ public class BezeroUI extends JPanel{
 		revalidate();
 		
 		DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
-		JList<String> pelikulak = new JList<String>(modelPelikulak);
-		ArrayList<String> pelikulakKey = new ArrayList<String>();
+		final JList<String> pelikulak = new JList<String>(modelPelikulak);
+		final ArrayList<String> pelikulakKey = new ArrayList<String>();
 		
 		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().katalogoaIkusi();
 		try {
@@ -274,9 +273,9 @@ public class BezeroUI extends JPanel{
 		kudeaketa.removeAll();
 		revalidate();
 		
-		DefaultListModel<String> modelAlokatuak = new DefaultListModel<String>();
-		JList<String> alokatuak = new JList<String>(modelAlokatuak);
-		ArrayList<String> alokatuakKey = new ArrayList<String>();
+		final DefaultListModel<String> modelAlokatuak = new DefaultListModel<String>();
+		final JList<String> alokatuak = new JList<String>(modelAlokatuak);
+		final ArrayList<String> alokatuakKey = new ArrayList<String>();
 		
 		ResultSet alokatuZerrenda = Bideokluba.getBideokluba().erabiltzailearenPelikulak(kodea);
 		try {

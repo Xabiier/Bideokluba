@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import view.LeihoaUI;
 import view.LoginUI;
 
@@ -296,11 +298,17 @@ public class Bideokluba {
 	}
 	
 	public void kredituaGehitu(String pKodea, int pKreditua) {
-		String kontsulta = 	"UPDATE `BAZKIDE` "+
-							"SET `Kreditua`='"+(getKredituak(pKodea)+pKreditua)+"' "+
-							"WHERE `Kodea`='"+pKodea+"';";
-		con.aldatu(kontsulta);	
-		LeihoaUI.getNireLeihoa().sortuDialog("Kreditua gehitu da");
+		int kred = getKredituak(pKodea);
+		if ((kred + pKreditua)<=65000){
+			String kontsulta = 	"UPDATE `BAZKIDE` "+
+								"SET `Kreditua`='"+(kred +pKreditua)+"' "+
+								"WHERE `Kodea`='"+pKodea+"';";
+			con.aldatu(kontsulta);	
+			LeihoaUI.getNireLeihoa().sortuDialog("Kreditua gehitu da");
+		}
+		else{
+			LeihoaUI.getNireLeihoa().sortuDialog("Ezin da hainbeste kreditu gehitu.\nKreditu maximoa 65000 da eta zure kreditua "+kred+" da.");
+		}
 	}
 	
 	public int getKredituak(String pKodea) {

@@ -79,6 +79,7 @@ public class LoginUI extends JPanel {
 						LeihoaUI.getNireLeihoa().aldatuPanela(new BezeroUI(kodea));
 					else 
 						JOptionPane.showMessageDialog(null, "Erabiltzaile edo pasahitz okerrak");
+						pasahitzaField.setText("");
 					
 				}
 			}
