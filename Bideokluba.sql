@@ -4,7 +4,7 @@ CREATE TABLE BAZKIDE(
   Izena VARCHAR(64) DEFAULT '',
   Abizena VARCHAR(64) DEFAULT '',
   Helbidea VARCHAR(15) DEFAULT '',
-  Kreditua INT DEFAULT 0 CHECK(Kreditua BETWEEN 0 and 9999),
+  Kreditua SMALLINT(11) unsigned DEFAULT 0,
   Egoera VARCHAR(15) DEFAULT 'alta',
   Noiztik DATETIME,
   PRIMARY KEY(Kodea)
