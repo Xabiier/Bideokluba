@@ -262,7 +262,9 @@ public class BezeroUI extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(pelikulak.getSelectedIndex()));
+				int i = pelikulak.getSelectedIndex();
+				if(i >= 0)
+					Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(i));
 			}
 		});
 		
@@ -300,16 +302,16 @@ public class BezeroUI extends JPanel{
 		LeihoaUI.getNireLeihoa().pack();
 		
 		alokatuak.addMouseListener(new MouseAdapter() {
-			 @Override
+			@Override
             public void mousePressed(MouseEvent e) {
-				 int i = alokatuak.getSelectedIndex();
+				int i = alokatuak.getSelectedIndex();
 				if(i >= 0) {
 					String kodeaAux = alokatuakKey.get(i);
 	            	pelikulaInfo.setText("Pelikula: "+alokatuak.getSelectedValue()+
 	            			"\nKodea: "+kodeaAux);
 	            	LeihoaUI.getNireLeihoa().pack();
 				}
-			 }
+			}
 		});
 
 		buttonItzuli.addActionListener(new ActionListener() {
