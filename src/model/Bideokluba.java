@@ -427,10 +427,6 @@ public class Bideokluba {
 				
 				con.aldatu(kontsulta);
 				
-				kontsulta = "DELETE FROM `ALOKAIRUAK` "+
-							"WHERE `Bazkide_kodea`='"+pBezKodea+"' and `Pelikula_kodea`='"+pPeliKodea+"';";
-				con.aldatu(kontsulta);
-				
 				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula itzuli da");
 			}
 		} catch (SQLException e) {
