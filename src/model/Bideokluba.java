@@ -130,9 +130,10 @@ public class Bideokluba {
 					if(pelikulak.isBeforeFirst()) {
 						while (pelikulak.next()) {
 							query = "UPDATE `PELIKULA` "+
-									"SET `Egoera`='Deskatalogatuta' "+
+									"SET `Egoera`='deskatalogatuta' "+
 									"WHERE `Kodea`='"+pelikulak.getString(1)+"'";
 							con.aldatu(query);
+							pelikulaItzuli(pKodea, pelikulak.getString(1));
 						}
 					}
 			
@@ -410,7 +411,7 @@ public class Bideokluba {
 		
 		try {
 			rs2.next();
-			if(rs1.isBeforeFirst() && rs2.getString(4).equalsIgnoreCase("alokatuta")){
+			if(rs1.isBeforeFirst() && (rs2.getString(4).equalsIgnoreCase("alokatuta") || rs2.getString(4).equalsIgnoreCase("deskatalogatuta"))){
 				rs1.next();
 				
 				String kontsulta = 	"UPDATE `PELIKULA` "+
@@ -430,8 +431,8 @@ public class Bideokluba {
 				//itzultze-data aldatzea
 				
 				con.aldatu(kontsulta);
-				
-				LeihoaUI.getNireLeihoa().sortuDialog("Pelikula itzuli da");
+				if(!rs2.getString(4).equalsIgnoreCase("deskatalogatuta"))
+					LeihoaUI.getNireLeihoa().sortuDialog("Pelikula itzuli da");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

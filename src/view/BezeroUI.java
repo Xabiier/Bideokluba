@@ -235,11 +235,16 @@ public class BezeroUI extends JPanel{
 		JScrollPane p = new JScrollPane();
 		p.setViewportView(pelikulak);
 		
+		JPanel goikoa = new JPanel(new BorderLayout());
+		JLabel dirua = new JLabel("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
+		goikoa.add(dirua, BorderLayout.NORTH);
+		goikoa.add(p, BorderLayout.SOUTH);
+		
 		JPanel panelAlokatu = new JPanel();
 		JButton buttonAlokatu = new JButton("Alokatu");
 		panelAlokatu.add(buttonAlokatu);
 		
-		kudeaketa.add(p, BorderLayout.NORTH);
+		kudeaketa.add(goikoa, BorderLayout.NORTH);
 		kudeaketa.add(pelikulaInfo, BorderLayout.CENTER);
 		kudeaketa.add(panelAlokatu, BorderLayout.SOUTH);
 		
@@ -267,6 +272,8 @@ public class BezeroUI extends JPanel{
 					Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(i));
 					pelikulakKey.remove(i);
 					modelPelikulak.remove(i);
+					dirua.setText("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
+					
 			}
 		});
 		
