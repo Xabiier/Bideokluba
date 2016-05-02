@@ -126,12 +126,16 @@ public class Bideokluba {
 					
 					con.aldatu(query);
 					
-					query = "UPDATE `PELIKULA` " +
-							"SET `Egoera`='Deskatalogatuta' " +
-							"WHERE '`ALOKAIRUAK`.`Bazkide_kodea`'='" + pKodea + "' and '" +
-								   "`ALOKAIRUAK`.`Pelikula_kodea`' ='`PELIKULA`.`Kodea`';";
-					
-					con.aldatu(query);
+					ResultSet pelikulak = erabiltzailearenPelikulak(pKodea);
+					if(pelikulak.isBeforeFirst()) {
+						while (pelikulak.next()) {
+							query = "UPDATE `PELIKULA` "+
+									"SET `Egoera`='Deskatalogatuta' "+
+									"WHERE `Kodea`='"+pelikulak.getString(1)+"'";
+							con.aldatu(query);
+						}
+					}
+			
 					LeihoaUI.getNireLeihoa().sortuDialog("Bazkideari baja eman zaio");
 				}
 				else{
