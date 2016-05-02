@@ -71,16 +71,21 @@ public class LoginUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
-					LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
-				else {
-					String kodea = Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
-					if ( kodea != null)
-						LeihoaUI.getNireLeihoa().aldatuPanela(new BezeroUI(kodea));
-					else 
-						JOptionPane.showMessageDialog(null, "Erabiltzaile edo pasahitz okerrak");
-						pasahitzaField.setText("");
-					
+				if (Bideokluba.con.konexioa!=null){
+					if(erabiltzaileField.getText().trim().equals("root") && pasahitzaField.getText().trim().equals("root"))
+						LeihoaUI.getNireLeihoa().aldatuPanela(new AdminUI());
+					else {
+						String kodea = Bideokluba.getBideokluba().erabiltzaileaKonektatu(erabiltzaileField.getText().trim(), pasahitzaField.getText().trim());
+						if ( kodea != null)
+							LeihoaUI.getNireLeihoa().aldatuPanela(new BezeroUI(kodea));
+						else 
+							JOptionPane.showMessageDialog(null, "Erabiltzaile edo pasahitz okerrak");
+							pasahitzaField.setText("");
+						
+					}
+				}
+				else{
+					LeihoaUI.getNireLeihoa().sortuDialog("Ezin da datu basera konektatu");
 				}
 			}
 		});

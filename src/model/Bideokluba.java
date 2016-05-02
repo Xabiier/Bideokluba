@@ -12,7 +12,7 @@ import view.LoginUI;
 public class Bideokluba {
 	
 	private static Bideokluba nBideokluba = null;
-	private static DBKonexioa con = new DBKonexioa();
+	public static DBKonexioa con = new DBKonexioa();
 			
 	private Bideokluba(){}
 	

@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class DBKonexioa {
 	
-	private Connection konexioa = null;
+	public Connection konexioa = null;
 
     private String erabiltzaileaDB = "bideokluba";
     
