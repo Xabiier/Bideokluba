@@ -220,7 +220,7 @@ public class BezeroUI extends JPanel{
 		kudeaketa.removeAll();
 		revalidate();
 		
-		DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
+		final DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
 		final JList<String> pelikulak = new JList<String>(modelPelikulak);
 		final ArrayList<String> pelikulakKey = new ArrayList<String>();
 		
