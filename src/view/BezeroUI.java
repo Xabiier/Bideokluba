@@ -265,6 +265,8 @@ public class BezeroUI extends JPanel{
 				int i = pelikulak.getSelectedIndex();
 				if(i >= 0)
 					Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(i));
+					pelikulakKey.remove(i);
+					modelPelikulak.remove(i);
 			}
 		});
 		
@@ -282,7 +284,7 @@ public class BezeroUI extends JPanel{
 		ResultSet alokatuZerrenda = Bideokluba.getBideokluba().erabiltzailearenPelikulak(kodea);
 		try {
 			while (alokatuZerrenda.next()) {
-				modelAlokatuak.addElement(alokatuZerrenda.getString(1));
+				modelAlokatuak.addElement(Bideokluba.getBideokluba().getPelikulaIzena(alokatuZerrenda.getString(1)));
 				alokatuakKey.add(alokatuZerrenda.getString(1));
 			}
 		} catch (SQLException e) {e.printStackTrace();}

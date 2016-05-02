@@ -389,7 +389,7 @@ public class Bideokluba {
 	public ResultSet erabiltzailearenPelikulak(String pBezKodea) {
 		String query = 	"SELECT `Pelikula_kodea` "+
 						"FROM `ALOKAIRUAK` "+
-						"WHERE `Bazkide_kodea`='" + pBezKodea+"';";
+						"WHERE `Bazkide_kodea`='" + pBezKodea+"' AND `Itzultze_data` IS NULL;";
 		return con.kontsultatu(query);
 	}
 	
