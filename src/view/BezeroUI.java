@@ -220,6 +220,8 @@ public class BezeroUI extends JPanel{
 		kudeaketa.removeAll();
 		revalidate();
 		
+		pelikulaInfo.setText("");
+		
 		final DefaultListModel<String> modelPelikulak = new DefaultListModel<String>();
 		final JList<String> pelikulak = new JList<String>(modelPelikulak);
 		final ArrayList<String> pelikulakKey = new ArrayList<String>();
@@ -268,12 +270,15 @@ public class BezeroUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int i = pelikulak.getSelectedIndex();
-				if(i >= 0)
-					Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(i));
-					pelikulakKey.remove(i);
-					modelPelikulak.remove(i);
-					dirua.setText("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
-					
+				if(i >= 0) {
+					if(Bideokluba.getBideokluba().pelikulaAlokatu(kodea, pelikulakKey.get(i))){
+						pelikulakKey.remove(i);
+						modelPelikulak.remove(i);
+						dirua.setText("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
+						pelikulaInfo.setText("");
+						LeihoaUI.getNireLeihoa().pack();
+					}
+				}
 			}
 		});
 		
@@ -283,6 +288,8 @@ public class BezeroUI extends JPanel{
 		remove(kudeaketa);
 		kudeaketa.removeAll();
 		revalidate();
+		
+		pelikulaInfo.setText("");
 		
 		final DefaultListModel<String> modelAlokatuak = new DefaultListModel<String>();
 		final JList<String> alokatuak = new JList<String>(modelAlokatuak);
@@ -331,6 +338,8 @@ public class BezeroUI extends JPanel{
 					Bideokluba.getBideokluba().pelikulaItzuli(kodea, alokatuakKey.get(i));
 					alokatuakKey.remove(i);
 					modelAlokatuak.remove(i);
+					pelikulaInfo.setText("");
+					LeihoaUI.getNireLeihoa().pack();
 				}
 			}
 		});

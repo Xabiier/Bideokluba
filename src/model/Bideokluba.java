@@ -146,7 +146,6 @@ public class Bideokluba {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con.aldatu(query);
 	}
 
 	public void pelikulaGehitu(String pKodea, String pIzena, int pPrezioa) {
@@ -331,7 +330,7 @@ public class Bideokluba {
 		return kodea;
 	}
 	
-	public void pelikulaAlokatu(String pBezKodea, String pPeliKodea) {
+	public boolean pelikulaAlokatu(String pBezKodea, String pPeliKodea) {
 		String query1 =	"SELECT * "+
 						"FROM `BAZKIDE` "+
 						"WHERE `Kodea`='" + pBezKodea + "';";
@@ -368,6 +367,7 @@ public class Bideokluba {
 									"WHERE `Kodea`='" + pBezKodea + "';";
 						con.aldatu(kontsulta);
 						LeihoaUI.getNireLeihoa().sortuDialog("Pelikula alokatu duzu");
+						return true;
 					}
 					else{
 						LeihoaUI.getNireLeihoa().sortuDialog("Ez duzu kreditu nahikorik pelikula hori alokatzeko");
@@ -388,7 +388,7 @@ public class Bideokluba {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return false;
 	}
 	
 	public ResultSet erabiltzailearenPelikulak(String pBezKodea) {

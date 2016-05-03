@@ -185,7 +185,7 @@ public class AdminUI extends JPanel{
 						erabiltzaileField.setText("");
 					}
 					else if (rb2.isSelected()){
-						Bideokluba.getBideokluba().bazkideBaja(erabiltzailea);//NO FUNCIONA DEL TODO
+						Bideokluba.getBideokluba().bazkideBaja(erabiltzailea);
 						erabiltzaileField.setText("");
 					}
 				}
@@ -275,6 +275,7 @@ public class AdminUI extends JPanel{
 				String pelikula =pelikulaField.getText().trim();
 				if (!pelikula.isEmpty()){
 					Bideokluba.getBideokluba().bajaEmanPelikula(pelikula);
+					pelikulaField.setText("");
 				}
 			}
 		});
