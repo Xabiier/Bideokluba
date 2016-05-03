@@ -94,7 +94,10 @@ public class LoginUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LeihoaUI.getNireLeihoa().aldatuPanela(new PelikulakUI());
+				if (Bideokluba.con.konexioa!=null)
+					LeihoaUI.getNireLeihoa().aldatuPanela(new PelikulakUI());
+				else
+					LeihoaUI.getNireLeihoa().sortuDialog("Ezin da datu basera konektatu");
 				
 			}
 		});

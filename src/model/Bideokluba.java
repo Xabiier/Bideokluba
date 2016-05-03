@@ -450,6 +450,14 @@ public class Bideokluba {
 		return con.kontsultatu(kontsulta);
 	}
 	
+	public ResultSet pelikulaLibreakIkusi() {
+		String kontsulta =	"SELECT * "+
+							"FROM `PELIKULA`"+
+							"WHERE `Egoera`='libre'"+
+							"ORDER BY `Izena`;";
+		return con.kontsultatu(kontsulta);
+	}
+	
 	public ResultSet estreinaldiakIkusi() {
 		String kontsulta =	"SELECT * "+
 						    "FROM `PELIKULA` "+

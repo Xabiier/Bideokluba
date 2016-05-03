@@ -224,7 +224,7 @@ public class BezeroUI extends JPanel{
 		final JList<String> pelikulak = new JList<String>(modelPelikulak);
 		final ArrayList<String> pelikulakKey = new ArrayList<String>();
 		
-		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().katalogoaIkusi();
+		ResultSet pelikulaZerrenda = Bideokluba.getBideokluba().pelikulaLibreakIkusi();
 		try {
 			while (pelikulaZerrenda.next()) {
 				modelPelikulak.addElement(pelikulaZerrenda.getString(2));
