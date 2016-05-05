@@ -238,7 +238,7 @@ public class BezeroUI extends JPanel{
 		p.setViewportView(pelikulak);
 		
 		JPanel goikoa = new JPanel(new BorderLayout());
-		JLabel dirua = new JLabel("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
+		final JLabel dirua = new JLabel("Daukazun dirua: "+Bideokluba.getBideokluba().getKredituak(kodea));
 		goikoa.add(dirua, BorderLayout.NORTH);
 		goikoa.add(p, BorderLayout.SOUTH);
 		

@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -31,16 +32,19 @@ public class Bideokluba {
 	
 	public String erabiltzaileaKonektatu(String pErabiltzailea, String pPasahitza){
 		String kodea = null;
-		String query =	"SELECT `Kodea` "+
-						"FROM `BAZKIDE` "+
-						"WHERE `Kodea`='" + pErabiltzailea + "' and `Pasahitza`='"+ pPasahitza + "';";
-		ResultSet rs = con.kontsultatu(query);
+		PreparedStatement p = null;
 		try {
+			p = con.konexioa.prepareStatement(	"SELECT `Kodea` "+
+												"FROM `BAZKIDE` "+
+												"WHERE `Kodea`= ? and `Pasahitza`= ?");
+			p.setString(1, pErabiltzailea);
+			p.setString(2, pPasahitza);
+			ResultSet rs = p.executeQuery();
 			if(rs.isBeforeFirst()){
 				return pErabiltzailea;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		return kodea;
 	}
