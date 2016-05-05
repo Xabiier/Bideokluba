@@ -18,7 +18,6 @@ import model.Bideokluba;
 public class AdminUI extends JPanel{
 	
 	private JPanel kudeaketa;
-
 	private static final long serialVersionUID = 1L;
 	
 	public AdminUI() {
