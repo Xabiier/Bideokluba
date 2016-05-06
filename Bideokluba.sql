@@ -12,7 +12,7 @@ CREATE TABLE BAZKIDE(
 CREATE TABLE PELIKULA(
   Kodea VARCHAR(15) NOT NULL,
   Izena VARCHAR(64) DEFAULT '',
-  Prezioa TINYINT(1) DEFAULT 0,
+  Prezioa INT(1) DEFAULT 0,
   Egoera VARCHAR(15) DEFAULT 'libre',
   Sartze_data DATETIME,
   PRIMARY KEY(Kodea)
@@ -20,7 +20,7 @@ CREATE TABLE PELIKULA(
 CREATE TABLE ALOKAIRUAK(
   Bazkide_kodea VARCHAR(15) NOT NULL,
   Pelikula_kodea VARCHAR(15) NOT NULL,
-  Hartze_data DATETIME,
+  Hartze_data DATETIME NOT NULL,
   Itzultze_data DATETIME,
   PRIMARY KEY(Bazkide_kodea, Pelikula_kodea, Hartze_data),
   FOREIGN KEY(Bazkide_kodea) REFERENCES BAZKIDE(Kodea) ON UPDATE CASCADE ON DELETE CASCADE,
